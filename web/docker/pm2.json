@@ -1,0 +1,11 @@
+{
+  "apps": [
+    {
+      "name": "can20-web",
+      "script": "/app/web/server.js",
+      "cwd": "/app/web",
+      "exec_mode": "cluster",
+      "instances": 2
+    }
+  ]
+}

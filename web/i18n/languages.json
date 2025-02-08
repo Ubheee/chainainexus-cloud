@@ -1,0 +1,11 @@
+{
+  "languages": [
+    {
+      "value": "en-US",
+      "name": "English (United States)",
+      "prompt_name": "English",
+      "example": "Hello, CAN20!",
+      "supported": true
+    }
+  ]
+}
