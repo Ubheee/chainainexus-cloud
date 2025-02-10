@@ -368,19 +368,16 @@ export const loginWithWallet = async ({
   publicKey,
   signature,
   network,
-  nonce,
 }: {
   publicKey: string
   signature: number[]
   network: string
-  nonce: string
 }) => {
   return post<LoginSuccess>('/wallet-login', {
     body: {
       public_key: publicKey,
       signature,
       network,
-      nonce,
     },
   })
 }

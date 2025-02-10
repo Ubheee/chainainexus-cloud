@@ -32,7 +32,6 @@ from services.billing_service import BillingService
 from services.errors.account import AccountRegisterError
 from services.errors.workspace import WorkSpaceNotAllowedCreateError
 from services.feature_service import FeatureService
-from utils.nonce import verify_and_remove_nonce
 from utils.validators import verify_solana_signature
 
 
@@ -239,16 +238,11 @@ class WalletLoginApi(Resource):
         parser.add_argument('public_key', type=str, required=True)
         parser.add_argument('signature', type=list, required=True, location='json')
         parser.add_argument('network', type=str, required=True)
-        parser.add_argument('nonce', type=str, required=True)
         args = parser.parse_args()
         print("args", args)
 
-        # Verify nonce first
-        if not verify_and_remove_nonce(args['public_key'], args['nonce']):
-            abort(401, 'Invalid or expired nonce')
-
         # Verify signature
-        message = f"Login to ChainAINexus: {args['nonce']}"
+        message = "Login to ChainAINexus"
         if not verify_solana_signature(
             args['public_key'], 
             args['signature'],

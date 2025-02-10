@@ -5,7 +5,7 @@ import { useState } from 'react'
 import style from '../page.module.css'
 import Button from '@/app/components/base/button'
 import Toast from '@/app/components/base/toast'
-import { getNonce, loginWithWallet } from '@/service/common'
+import { loginWithWallet } from '@/service/common'
 import classNames from '@/utils/classnames'
 type WalletAuthResponse = {
   result: string
@@ -55,18 +55,8 @@ export default function WalletAuth() {
       if (!signMessage)
         throw new Error(String(t('login.walletSigningNotSupported')))
 
-      // Get nonce from backend
-      const nonceResponse = await getNonce({
-        publicKey: publicKey.toBase58(),
-        network: 'solana',
-      })
-      if (nonceResponse.result !== 'success')
-        throw new Error(String(t('login.failedToGetNonce')))
-
-      const nonce = nonceResponse.data.nonce
-
       // Sign message with nonce
-      const message = new TextEncoder().encode(`Login to ChainAINexus: ${nonce}`)
+      const message = new TextEncoder().encode('Login to ChainAINexus')
       const signature = await signMessage(message)
 
       // Verify and login
@@ -74,7 +64,6 @@ export default function WalletAuth() {
         publicKey: publicKey.toBase58(),
         signature: Array.from(signature),
         network: 'solana',
-        nonce,
       })) as unknown as WalletAuthResponse
 
       if (loginResponse.result === 'success') {
