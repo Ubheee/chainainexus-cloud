@@ -1,6 +1,6 @@
 # base image
 FROM node:20-alpine3.20 AS base
-LABEL maintainer="takatost@gmail.com"
+LABEL maintainer="chainainexus@gmail.com"
 
 # if you located in China, you can use aliyun mirror to speed up
 # RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.aliyun.com/g' /etc/apk/repositories
@@ -15,6 +15,7 @@ WORKDIR /app/web
 
 COPY package.json .
 COPY yarn.lock .
+RUN apk add --no-cache python3 make g++
 
 # if you located in China, you can use taobao registry to speed up
 # RUN yarn install --frozen-lockfile --registry https://registry.npmmirror.com/
