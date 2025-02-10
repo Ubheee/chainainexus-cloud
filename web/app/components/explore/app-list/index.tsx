@@ -163,7 +163,7 @@ const Apps = ({
   return (
     <div className={cn(
       'flex flex-col',
-      pageType === PageType.EXPLORE ? 'h-full border-l border-gray-200' : 'h-[calc(100%-56px)]',
+      pageType === PageType.EXPLORE ? 'h-full border-l border-divider-regular' : 'h-[calc(100%-56px)]',
     )}>
       {pageType === PageType.EXPLORE && (
         <div className='shrink-0 pt-6 px-12'>
