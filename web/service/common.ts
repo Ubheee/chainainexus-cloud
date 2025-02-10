@@ -3,6 +3,7 @@ import { del, get, patch, post, put } from './base'
 import type {
   AccountIntegrate,
   ApiBasedExtension,
+  ChainAINexusVersionResponse,
   CodeBasedExtension,
   CommonResponse,
   DataSourceNotion,
@@ -11,7 +12,6 @@ import type {
   IWorkspace,
   InitValidateStatusResponse,
   InvitationResponse,
-  ChainAINexusVersionResponse,
   Member,
   ModerateResponse,
   OauthResponse,
@@ -40,7 +40,7 @@ import type { SystemFeatures } from '@/types/feature'
 
 type LoginSuccess = {
   result: 'success'
-  data: { access_token: string;refresh_token: string }
+  data: { access_token: string;refresh_token: string; address: string }
 }
 type LoginFail = {
   result: 'fail'
@@ -348,3 +348,39 @@ export const verifyDeleteAccountCode = (body: { code: string;token: string }) =>
 
 export const submitDeleteAccountFeedback = (body: { feedback: string;email: string }) =>
   post<CommonResponse>('/account/delete/feedback', { body })
+
+export const getNonce = async ({
+  publicKey,
+  network,
+}: {
+  publicKey: string
+  network: string
+}) => {
+  return post<{ result: string; data: { nonce: string } }>('/nonce', {
+    body: {
+      public_key: publicKey,
+      network,
+    },
+  })
+}
+
+export const loginWithWallet = async ({
+  publicKey,
+  signature,
+  network,
+  nonce,
+}: {
+  publicKey: string
+  signature: number[]
+  network: string
+  nonce: string
+}) => {
+  return post<LoginSuccess>('/wallet-login', {
+    body: {
+      public_key: publicKey,
+      signature,
+      network,
+      nonce,
+    },
+  })
+}

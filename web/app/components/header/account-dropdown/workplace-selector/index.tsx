@@ -10,6 +10,7 @@ import { ChevronRight } from '@/app/components/base/icons/src/vender/line/arrows
 import { Check } from '@/app/components/base/icons/src/vender/line/general'
 import { ToastContext } from '@/app/components/base/toast'
 import classNames from '@/utils/classnames'
+import { CopyableAddress } from '@/app/components/base/address'
 
 const itemClassName = `
   flex items-center px-3 py-2 h-10 cursor-pointer
@@ -55,7 +56,9 @@ const WorkplaceSelector = () => {
               `,
             )}>
               <div className={itemIconClassName}>{currentWorkspace?.name[0].toLocaleUpperCase()}</div>
-              <div className={`${itemNameClassName} truncate`}>{currentWorkspace?.name}</div>
+              <div className={`${itemNameClassName} truncate`}>
+                <CopyableAddress address={currentWorkspace?.name || ''} className='mr-1' copyable={false} />
+              </div>
               <ChevronRight className='shrink-0 w-[14px] h-[14px] text-gray-500' />
             </Menu.Button>
             <Transition
@@ -84,7 +87,9 @@ const WorkplaceSelector = () => {
                           active && 'bg-state-base-hover',
                         )} key={workspace.id} onClick={() => handleSwitchWorkspace(workspace.id)}>
                           <div className={itemIconClassName}>{workspace.name[0].toLocaleUpperCase()}</div>
-                          <div className={itemNameClassName}>{workspace.name}</div>
+                          <div className={itemNameClassName}>
+                            <CopyableAddress address={workspace.name} className='mr-1' copyable={false} />
+                          </div>
                           {workspace.current && <Check className={itemCheckClassName} />}
                         </div>}
 

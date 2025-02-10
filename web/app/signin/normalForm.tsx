@@ -1,18 +1,13 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import Link from 'next/link'
 import { useRouter, useSearchParams } from 'next/navigation'
-import { RiContractLine, RiDoorLockLine, RiErrorWarningFill } from '@remixicon/react'
+import { RiContractLine, RiErrorWarningFill } from '@remixicon/react'
 import Loading from '../components/base/loading'
-import MailAndCodeAuth from './components/mail-and-code-auth'
-import MailAndPasswordAuth from './components/mail-and-password-auth'
-import SocialAuth from './components/social-auth'
-import SSOAuth from './components/sso-auth'
+import WalletAuth from './components/wallet-auth'
 import cn from '@/utils/classnames'
 import { getSystemFeatures, invitationCheck } from '@/service/common'
 import { LicenseStatus, defaultSystemFeatures } from '@/types/feature'
 import Toast from '@/app/components/base/toast'
-import { IS_CE_EDITION } from '@/config'
 
 const NormalForm = () => {
   const { t } = useTranslation()
@@ -138,7 +133,7 @@ const NormalForm = () => {
             <h2 className="title-4xl-semi-bold text-text-primary">{t('login.pageTitle')}</h2>
             <p className='mt-2 body-md-regular text-text-tertiary'>{t('login.welcome')}</p>
           </div>}
-        <div className="bg-background-body">
+        {/* <div className="bg-background-body">
           <div className="flex flex-col gap-3 mt-6">
             {systemFeatures.enable_social_oauth_login && <SocialAuth />}
             {systemFeatures.sso_enforced_for_signin && <div className='w-full'>
@@ -208,6 +203,14 @@ const NormalForm = () => {
             >{t('login.setAdminAccount')}</Link>
           </div>}
 
+        </div> */}
+        <div className="w-full mx-auto mt-8">
+          <div className="bg-background-body">
+            <div className="flex flex-col gap-3 mt-6">
+              <WalletAuth />
+              <div className="w-full mx-auto text-center text-text-tertiary system-xs-regular">If you don’t have an account, linking a wallet will automatically register one for you</div>
+            </div>
+          </div>
         </div>
       </div>
     </>

@@ -110,6 +110,7 @@ const Header = () => {
             <HeaderBillingBtn onClick={handlePlanClick} />
           </div>
         )}
+
         <WorkspaceProvider>
           <AccountDropdown isMobile={isMobile} />
         </WorkspaceProvider>

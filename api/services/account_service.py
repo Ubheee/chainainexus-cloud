@@ -543,6 +543,39 @@ class AccountService:
 
         return False
 
+    @staticmethod
+    def get_or_create_wallet_account(public_key: str, network: str) -> Account:
+        """
+        Get or create a wallet account.
+
+        :param public_key: Wallet public key.
+        :param network: Network name.
+        :return: Account.
+        """
+        account_integrate = AccountIntegrate.query.filter_by(
+            provider=network, open_id=public_key
+        ).first()
+
+        if account_integrate:
+            account = Account.query.get(account_integrate.account_id)
+            if not account:
+                raise AccountNotFoundError()
+            return account
+        
+        if not FeatureService.get_system_features().is_allow_register:
+            raise AccountNotFoundError()
+
+        account = AccountService.create_account(
+            email=f"{public_key}@{network}.wallet",
+            name=public_key,
+            interface_language=languages[0]  # Default to the first language
+        )
+
+        AccountService.link_account_integrate(network, public_key, account)
+        TenantService.create_owner_tenant_if_not_exist(account=account)
+
+        return account
+
 
 def _get_login_cache_key(*, account_id: str, token: str):
     return f"account_login:{account_id}:{token}"

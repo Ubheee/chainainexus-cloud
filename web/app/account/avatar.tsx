@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next'
 import { Fragment } from 'react'
 import { useRouter } from 'next/navigation'
 import { Menu, Transition } from '@headlessui/react'
+import { CopyableAddress } from '../components/base/address'
 import Avatar from '@/app/components/base/avatar'
 import { logout } from '@/service/common'
 import { useAppContext } from '@/context/app-context'
@@ -68,8 +69,9 @@ export default function AppSelector() {
                   <div className='p-1'>
                     <div className='flex flex-nowrap items-center px-3 py-2'>
                       <div className='grow'>
-                        <div className='system-md-medium text-text-primary break-all'>{userProfile.name}</div>
-                        <div className='system-xs-regular text-text-tertiary break-all'>{userProfile.email}</div>
+                        <div className='system-md-medium text-text-primary break-all'>
+                          <CopyableAddress address={userProfile.name} className='mr-1' copyable={false} />
+                        </div>
                       </div>
                       <Avatar avatar={userProfile.avatar_url} name={userProfile.name} size={32} />
                     </div>

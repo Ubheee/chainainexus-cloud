@@ -104,6 +104,15 @@ const translation = {
   licenseLostTip: 'Failed to connect CAN20 license server. Please contact your administrator to continue using CAN20.',
   licenseInactive: 'License Inactive',
   licenseInactiveTip: 'The CAN20 Enterprise license for your workspace is inactive. Please contact your administrator to continue using CAN20.',
+  withWallet: 'Connect Wallet to Sign In',
+  walletNotConnected: 'Please connect your Solana wallet first',
+  invalidSignature: 'Invalid wallet signature',
+  failedToGetNonce: 'Failed to get nonce',
+  authenticationFailed: 'Authentication failed',
+  failedToStoreToken: 'Failed to store token',
+  connectWallet: 'Connect Wallet',
+  walletConnectionFailed: 'Failed to connect wallet',
+  noWalletsFound: 'No wallets found',
 }
 
 export default translation

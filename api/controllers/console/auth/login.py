@@ -1,7 +1,7 @@
 from typing import cast
 
 import flask_login  # type: ignore
-from flask import request
+from flask import abort, request
 from flask_restful import Resource, reqparse  # type: ignore
 
 import services
@@ -32,6 +32,8 @@ from services.billing_service import BillingService
 from services.errors.account import AccountRegisterError
 from services.errors.workspace import WorkSpaceNotAllowedCreateError
 from services.feature_service import FeatureService
+from utils.nonce import verify_and_remove_nonce
+from utils.validators import verify_solana_signature
 
 
 class LoginApi(Resource):
@@ -231,9 +233,45 @@ class RefreshTokenApi(Resource):
             return {"result": "fail", "data": str(e)}, 401
 
 
+class WalletLoginApi(Resource):
+    def post(self):
+        parser = reqparse.RequestParser()
+        parser.add_argument('public_key', type=str, required=True)
+        parser.add_argument('signature', type=list, required=True, location='json')
+        parser.add_argument('network', type=str, required=True)
+        parser.add_argument('nonce', type=str, required=True)
+        args = parser.parse_args()
+        print("args", args)
+
+        # Verify nonce first
+        if not verify_and_remove_nonce(args['public_key'], args['nonce']):
+            abort(401, 'Invalid or expired nonce')
+
+        # Verify signature
+        message = f"Login to ChainAINexus: {args['nonce']}"
+        if not verify_solana_signature(
+            args['public_key'], 
+            args['signature'],
+            message
+        ):
+            abort(401, 'Invalid signature')
+
+        # Get or create user account
+        account = AccountService.get_or_create_wallet_account(
+            args['public_key'],
+            args['network']
+        )
+
+        token_pair = AccountService.login(account=account)
+        data = token_pair.model_dump()
+        data.update({"address": args['public_key']})
+        return {'result': 'success', 'data': data}
+
+
 api.add_resource(LoginApi, "/login")
 api.add_resource(LogoutApi, "/logout")
 api.add_resource(EmailCodeLoginSendEmailApi, "/email-code-login")
 api.add_resource(EmailCodeLoginApi, "/email-code-login/validity")
 api.add_resource(ResetPasswordSendEmailApi, "/reset-password")
 api.add_resource(RefreshTokenApi, "/refresh-token")
+api.add_resource(WalletLoginApi, "/wallet-login")

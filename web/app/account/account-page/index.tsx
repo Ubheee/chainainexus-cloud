@@ -16,7 +16,7 @@ import { ToastContext } from '@/app/components/base/toast'
 import AppIcon from '@/app/components/base/app-icon'
 import { IS_CE_EDITION } from '@/config'
 import Input from '@/app/components/base/input'
-
+import { CopyableAddress } from '@/app/components/base/address'
 const titleClassName = `
   system-sm-semibold text-text-secondary
 `
@@ -135,40 +135,11 @@ export default function AccountPage() {
       <div className='mb-8 p-6 rounded-xl flex items-center bg-gradient-to-r from-background-gradient-bg-fill-chat-bg-2 to-background-gradient-bg-fill-chat-bg-1'>
         <AvatarWithEdit avatar={userProfile.avatar_url} name={userProfile.name} onSave={ mutateUserProfile } size={64} />
         <div className='ml-4'>
-          <p className='system-xl-semibold text-text-primary'>{userProfile.name}</p>
-          <p className='system-xs-regular text-text-tertiary'>{userProfile.email}</p>
+          <p className='system-xl-semibold text-text-primary'>
+            <CopyableAddress address={userProfile.name} className='mr-1' copyable={true} showFull={true} />
+          </p>
         </div>
       </div>
-      <div className='mb-8'>
-        <div className={titleClassName}>{t('common.account.name')}</div>
-        <div className='flex items-center justify-between gap-2 w-full mt-2'>
-          <div className='flex-1 bg-components-input-bg-normal rounded-lg p-2 system-sm-regular text-components-input-text-filled '>
-            <span className='pl-1'>{userProfile.name}</span>
-          </div>
-          <div className='bg-components-button-tertiary-bg rounded-lg py-2 px-3 cursor-pointer system-sm-medium text-components-button-tertiary-text' onClick={handleEditName}>
-            {t('common.operation.edit')}
-          </div>
-        </div>
-      </div>
-      <div className='mb-8'>
-        <div className={titleClassName}>{t('common.account.email')}</div>
-        <div className='flex items-center justify-between gap-2 w-full mt-2'>
-          <div className='flex-1 bg-components-input-bg-normal rounded-lg p-2 system-sm-regular text-components-input-text-filled '>
-            <span className='pl-1'>{userProfile.email}</span>
-          </div>
-        </div>
-      </div>
-      {
-        systemFeatures.enable_email_password_login && (
-          <div className='mb-8 flex justify-between gap-2'>
-            <div>
-              <div className='mb-1 system-sm-semibold text-text-secondary'>{t('common.account.password')}</div>
-              <div className='mb-2 body-xs-regular text-text-tertiary'>{t('common.account.passwordTip')}</div>
-            </div>
-            <Button onClick={() => setEditPasswordModalVisible(true)}>{userProfile.is_password_set ? t('common.account.resetPassword') : t('common.account.setPassword')}</Button>
-          </div>
-        )
-      }
       <div className='mb-6 border-[1px] border-divider-subtle' />
       <div className='mb-8'>
         <div className={titleClassName}>{t('common.account.chainAINexusAccount')}</div>

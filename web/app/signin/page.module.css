@@ -6,6 +6,18 @@
   background: center/contain url('./assets/google.svg');
 }
 
+.okxIcon {
+  background: center/contain url('./assets/okx.svg');
+}
+
+.phantomIcon {
+  background: center/contain url('./assets/phantom.svg');
+}
+.solfareIcon {
+  background: center/contain url('./assets/solfare.svg');
+  border-radius: 50%;
+}
+
 .background {
   background-image: url('./assets/background.png');
   background-size: cover;

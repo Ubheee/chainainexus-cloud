@@ -664,3 +664,12 @@ export const patch = <T>(url: string, options = {}, otherOptions?: IOtherOptions
 export const patchPublic = <T>(url: string, options = {}, otherOptions?: IOtherOptions) => {
   return patch<T>(url, options, { ...otherOptions, isPublicAPI: true })
 }
+
+function handleAuthError(error: any) {
+  if (error.code === 'wallet_auth_required') {
+    // Redirect to signin page when wallet auth is required
+    globalThis.location.href = '/signin'
+    return Promise.reject(error)
+  }
+  // ... handle other errors
+}

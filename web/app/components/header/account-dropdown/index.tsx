@@ -9,6 +9,7 @@ import { Menu, Transition } from '@headlessui/react'
 import Indicator from '../indicator'
 import AccountAbout from '../account-about'
 import { mailToSupport } from '../utils/util'
+import { CopyableAddress } from '../../base/address'
 import WorkplaceSelector from './workplace-selector'
 import classNames from '@/utils/classnames'
 import I18n from '@/context/i18n'
@@ -49,6 +50,7 @@ export default function AppSelector({ isMobile }: IAppSelector) {
     localStorage.removeItem('setup_status')
     localStorage.removeItem('console_token')
     localStorage.removeItem('refresh_token')
+    localStorage.removeItem('address')
 
     router.push('/signin')
   }
@@ -70,7 +72,7 @@ export default function AppSelector({ isMobile }: IAppSelector) {
               >
                 <Avatar avatar={userProfile.avatar_url} name={userProfile.name} className='sm:mr-2 mr-0' size={32} />
                 {!isMobile && <>
-                  {userProfile.name}
+                  <CopyableAddress address={userProfile.name} className='mr-1' copyable={false} />
                   <RiArrowDownSLine className="w-3 h-3 ml-1 text-gray-700" />
                 </>}
               </Menu.Button>
@@ -94,8 +96,9 @@ export default function AppSelector({ isMobile }: IAppSelector) {
                     <div className='flex flex-nowrap items-center px-4 py-[13px]'>
                       <Avatar avatar={userProfile.avatar_url} name={userProfile.name} size={36} className='mr-3' />
                       <div className='grow'>
-                        <div className='system-md-medium text-text-primary break-all'>{userProfile.name}</div>
-                        <div className='system-xs-regular text-text-tertiary break-all'>{userProfile.email}</div>
+                        <div className='system-md-medium text-text-primary break-all'>
+                          <CopyableAddress address={userProfile.name} className='mr-1' copyable={false} />
+                        </div>
                       </div>
                     </div>
                   </Menu.Item>
