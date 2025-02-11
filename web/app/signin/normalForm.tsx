@@ -1,12 +1,11 @@
 import React, { useCallback, useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { useRouter, useSearchParams } from 'next/navigation'
-import { RiContractLine, RiErrorWarningFill } from '@remixicon/react'
 import Loading from '../components/base/loading'
 import WalletAuth from './components/wallet-auth'
 import cn from '@/utils/classnames'
 import { getSystemFeatures, invitationCheck } from '@/service/common'
-import { LicenseStatus, defaultSystemFeatures } from '@/types/feature'
+import { defaultSystemFeatures } from '@/types/feature'
 import Toast from '@/app/components/base/toast'
 
 const NormalForm = () => {
@@ -78,48 +77,6 @@ const NormalForm = () => {
       <Loading type='area' />
     </div>
   }
-  if (systemFeatures.license?.status === LicenseStatus.LOST) {
-    return <div className='w-full mx-auto mt-8'>
-      <div className='bg-background-body'>
-        <div className="p-4 rounded-lg bg-gradient-to-r from-workflow-workflow-progress-bg-1 to-workflow-workflow-progress-bg-2">
-          <div className='flex items-center justify-center w-10 h-10 rounded-xl bg-components-card-bg shadow shadows-shadow-lg mb-2 relative'>
-            <RiContractLine className='w-5 h-5' />
-            <RiErrorWarningFill className='absolute w-4 h-4 text-text-warning-secondary -top-1 -right-1' />
-          </div>
-          <p className='system-sm-medium text-text-primary'>{t('login.licenseLost')}</p>
-          <p className='system-xs-regular text-text-tertiary mt-1'>{t('login.licenseLostTip')}</p>
-        </div>
-      </div>
-    </div>
-  }
-  if (systemFeatures.license?.status === LicenseStatus.EXPIRED) {
-    return <div className='w-full mx-auto mt-8'>
-      <div className='bg-white'>
-        <div className="p-4 rounded-lg bg-gradient-to-r from-workflow-workflow-progress-bg-1 to-workflow-workflow-progress-bg-2">
-          <div className='flex items-center justify-center w-10 h-10 rounded-xl bg-components-card-bg shadow shadows-shadow-lg mb-2 relative'>
-            <RiContractLine className='w-5 h-5' />
-            <RiErrorWarningFill className='absolute w-4 h-4 text-text-warning-secondary -top-1 -right-1' />
-          </div>
-          <p className='system-sm-medium text-text-primary'>{t('login.licenseExpired')}</p>
-          <p className='system-xs-regular text-text-tertiary mt-1'>{t('login.licenseExpiredTip')}</p>
-        </div>
-      </div>
-    </div>
-  }
-  if (systemFeatures.license?.status === LicenseStatus.INACTIVE) {
-    return <div className='w-full mx-auto mt-8'>
-      <div className='bg-white'>
-        <div className="p-4 rounded-lg bg-gradient-to-r from-workflow-workflow-progress-bg-1 to-workflow-workflow-progress-bg-2">
-          <div className='flex items-center justify-center w-10 h-10 rounded-xl bg-components-card-bg shadow shadows-shadow-lg mb-2 relative'>
-            <RiContractLine className='w-5 h-5' />
-            <RiErrorWarningFill className='absolute w-4 h-4 text-text-warning-secondary -top-1 -right-1' />
-          </div>
-          <p className='system-sm-medium text-text-primary'>{t('login.licenseInactive')}</p>
-          <p className='system-xs-regular text-text-tertiary mt-1'>{t('login.licenseInactiveTip')}</p>
-        </div>
-      </div>
-    </div>
-  }
 
   return (
     <>
@@ -133,77 +90,6 @@ const NormalForm = () => {
             <h2 className="title-4xl-semi-bold text-text-primary">{t('login.pageTitle')}</h2>
             <p className='mt-2 body-md-regular text-text-tertiary'>{t('login.welcome')}</p>
           </div>}
-        {/* <div className="bg-background-body">
-          <div className="flex flex-col gap-3 mt-6">
-            {systemFeatures.enable_social_oauth_login && <SocialAuth />}
-            {systemFeatures.sso_enforced_for_signin && <div className='w-full'>
-              <SSOAuth protocol={systemFeatures.sso_enforced_for_signin_protocol} />
-            </div>}
-          </div>
-
-          {showORLine && <div className="relative mt-6">
-            <div className="absolute inset-0 flex items-center" aria-hidden="true">
-              <div className='bg-gradient-to-r from-background-gradient-mask-transparent via-divider-regular to-background-gradient-mask-transparent h-px w-full'></div>
-            </div>
-            <div className="relative flex justify-center">
-              <span className="px-2 text-text-tertiary system-xs-medium-uppercase bg-background-body">{t('login.or')}</span>
-            </div>
-          </div>}
-          {
-            (systemFeatures.enable_email_code_login || systemFeatures.enable_email_password_login) && <>
-              {systemFeatures.enable_email_code_login && authType === 'code' && <>
-                <MailAndCodeAuth isInvite={isInviteLink} />
-                {systemFeatures.enable_email_password_login && <div className='cursor-pointer py-1 text-center' onClick={() => { updateAuthType('password') }}>
-                  <span className='system-xs-medium text-components-button-secondary-accent-text'>{t('login.usePassword')}</span>
-                </div>}
-              </>}
-              {systemFeatures.enable_email_password_login && authType === 'password' && <>
-                <MailAndPasswordAuth isInvite={isInviteLink} isEmailSetup={systemFeatures.is_email_setup} allowRegistration={systemFeatures.is_allow_register} />
-                {systemFeatures.enable_email_code_login && <div className='cursor-pointer py-1 text-center' onClick={() => { updateAuthType('code') }}>
-                  <span className='system-xs-medium text-components-button-secondary-accent-text'>{t('login.useVerificationCode')}</span>
-                </div>}
-              </>}
-            </>
-          }
-          {allMethodsAreDisabled && <>
-            <div className="p-4 rounded-lg bg-gradient-to-r from-workflow-workflow-progress-bg-1 to-workflow-workflow-progress-bg-2">
-              <div className='flex items-center justify-center w-10 h-10 rounded-xl bg-components-card-bg shadow shadows-shadow-lg mb-2'>
-                <RiDoorLockLine className='w-5 h-5' />
-              </div>
-              <p className='system-sm-medium text-text-primary'>{t('login.noLoginMethod')}</p>
-              <p className='system-xs-regular text-text-tertiary mt-1'>{t('login.noLoginMethodTip')}</p>
-            </div>
-            <div className="relative my-2 py-2">
-              <div className="absolute inset-0 flex items-center" aria-hidden="true">
-                <div className='bg-gradient-to-r from-background-gradient-mask-transparent via-divider-regular to-background-gradient-mask-transparent h-px w-full'></div>
-              </div>
-            </div>
-          </>}
-          <div className="w-full block mt-2 system-xs-regular text-text-tertiary">
-            {t('login.tosDesc')}
-            &nbsp;
-            <Link
-              className='system-xs-medium text-text-secondary hover:underline'
-              target='_blank' rel='noopener noreferrer'
-              href='https://chainainexus.com/terms'
-            >{t('login.tos')}</Link>
-            &nbsp;&&nbsp;
-            <Link
-              className='system-xs-medium text-text-secondary hover:underline'
-              target='_blank' rel='noopener noreferrer'
-              href='https://chainainexus.com/privacy'
-            >{t('login.pp')}</Link>
-          </div>
-          {IS_CE_EDITION && <div className="w-hull block mt-2 system-xs-regular text-text-tertiary">
-            {t('login.goToInit')}
-            &nbsp;
-            <Link
-              className='system-xs-medium text-text-secondary hover:underline'
-              href='/install'
-            >{t('login.setAdminAccount')}</Link>
-          </div>}
-
-        </div> */}
         <div className="w-full mx-auto mt-8">
           <div className="bg-background-body">
             <div className="flex flex-col gap-3 mt-6">
