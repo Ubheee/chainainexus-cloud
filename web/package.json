@@ -176,7 +176,7 @@
   "resolutions": {
     "@types/react": "~18.2.0",
     "@types/react-dom": "~18.2.0",
-    "solana-web3.js": "1.98.0"
+    "@solana/web3.js": "^1.98.0"
   },
   "lint-staged": {
     "**/*.js?(x)": [
