@@ -781,6 +781,11 @@ class AccountConfig(BaseSettings):
         default=5,
     )
 
+    DEFAULT_TEMPLATE_APPS: str = Field(
+        description="Comma-separated list of template app IDs to be copied for new users",
+        default="a23b57fa-85da-49c0-a571-3aff375976c1,b53545b1-79ea-4da3-b31a-c39391c6f041"
+    )
+
 
 class FeatureConfig(
     # place the configs in alphabet order

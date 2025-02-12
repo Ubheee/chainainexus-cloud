@@ -10,6 +10,7 @@ from typing import Any, Optional, cast
 
 from pydantic import BaseModel
 from sqlalchemy import func
+from sqlalchemy.orm import Session
 from werkzeug.exceptions import Unauthorized
 
 from configs import can20_config
@@ -32,6 +33,7 @@ from models.account import (
     TenantStatus,
 )
 from models.model import CAN20Setup
+from services.app_dsl_service import AppDslService, ImportMode
 from services.billing_service import BillingService
 from services.errors.account import (
     AccountAlreadyInTenantError,
@@ -51,6 +53,7 @@ from services.errors.account import (
 )
 from services.errors.workspace import WorkSpaceNotAllowedCreateError
 from services.feature_service import FeatureService
+from services.recommended_app_service import RecommendedAppService
 from tasks.delete_account_task import delete_account_task
 from tasks.mail_account_deletion_task import send_account_deletion_verification_code
 from tasks.mail_email_code_login import send_email_code_login_mail_task
@@ -192,6 +195,31 @@ class AccountService:
         account.password_salt = base64_salt
         db.session.commit()
         return account
+    
+    @staticmethod
+    def copy_template_app_for_new_user(account: Account, template_app_id: str) -> None:
+        """Copy a template app for a newly registered user"""
+        with Session(db.engine) as session:
+            import_service = AppDslService(session)
+            
+            template_app = RecommendedAppService.get_recommend_app_detail(template_app_id)
+            print("template_app", template_app)
+
+            if not template_app:
+                logging.error(f"Template app {template_app_id} not found")
+                return
+            
+            # Import the app for the new user
+            import_service.import_app(
+                account=account,
+                import_mode=ImportMode.YAML_CONTENT.value,
+                yaml_content=template_app.get('export_data'),
+                name=template_app.get('name'),
+                icon=template_app.get('icon'),
+                icon_background=template_app.get('icon_background'),
+            )
+            
+            session.commit()    
 
     @staticmethod
     def create_account(
@@ -240,6 +268,7 @@ class AccountService:
 
         db.session.add(account)
         db.session.commit()
+
         return account
 
     @staticmethod
@@ -570,10 +599,30 @@ class AccountService:
             name=public_key,
             interface_language=languages[0]  # Default to the first language
         )
-
         AccountService.link_account_integrate(network, public_key, account)
         TenantService.create_owner_tenant_if_not_exist(account=account)
 
+        # Copy template apps for the new user
+        try:
+            # Get template apps from config
+            template_apps = [
+                app_id.strip() 
+                for app_id in can20_config.DEFAULT_TEMPLATE_APPS.split(',') 
+                if app_id.strip()
+            ]
+
+            # Copy each template app for the new user
+            for template_app_id in template_apps:
+                try:
+                    AccountService.copy_template_app_for_new_user(account, template_app_id)
+                except Exception as e:
+                    logging.exception(f"Failed to copy template app {template_app_id} for user {account.id}")
+                    continue
+
+        except Exception as e:
+            logging.exception(f"Failed to copy template apps for account {account.id}")
+            # Don't raise the exception - allow account creation to succeed even if app copying fails
+            
         return account
 
 

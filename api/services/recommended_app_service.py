@@ -34,4 +34,9 @@ class RecommendedAppService:
         mode = can20_config.HOSTED_FETCH_APP_TEMPLATES_MODE
         retrieval_instance = RecommendAppRetrievalFactory.get_recommend_app_factory(mode)()
         result: dict = retrieval_instance.get_recommend_app_detail(app_id)
+        if not result.get("app_details"):
+            result = (
+                RecommendAppRetrievalFactory.get_buildin_recommend_app_retrieval().fetch_recommended_app_detail_from_builtin(app_id)
+            )
+
         return result

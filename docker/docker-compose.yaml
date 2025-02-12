@@ -5,6 +5,7 @@
 # ==================================================================
 
 x-shared-env: &shared-api-worker-env
+  DEFAULT_TEMPLATE_APPS: ${DEFAULT_TEMPLATE_APPS:-a23b57fa-85da-49c0-a571-3aff375976c1,b53545b1-79ea-4da3-b31a-c39391c6f041}
   SSO_ENFORCED_FOR_SIGNIN: ${SSO_ENFORCED_FOR_SIGNIN:-false}
   SSO_ENFORCED_FOR_SIGNIN_PROTOCOL: ${SSO_ENFORCED_FOR_SIGNIN_PROTOCOL:-}
   SSO_ENFORCED_FOR_WEB: ${SSO_ENFORCED_FOR_WEB:-false}
