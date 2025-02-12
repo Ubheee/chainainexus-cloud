@@ -21,8 +21,12 @@ export function CssTransform(cssString: string): object {
   const propertyValuePairs = cssString.split(';')
   for (const pair of propertyValuePairs) {
     if (pair.trim().length > 0) {
-      const [property, value] = pair.split(':')
-      Object.assign(style, { [property.trim()]: value.trim() })
+      const parts = pair.split(':')
+      // Only process if we have both property and value
+      if (parts.length === 2) {
+        const [property, value] = parts
+        Object.assign(style, { [property.trim()]: value.trim() })
+      }
     }
   }
   return style
