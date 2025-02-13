@@ -16,6 +16,7 @@ const SwrInitor = ({
   const searchParams = useSearchParams()
   const consoleToken = decodeURIComponent(searchParams.get('access_token') || '')
   const refreshToken = decodeURIComponent(searchParams.get('refresh_token') || '')
+  const urlToken = decodeURIComponent(searchParams.get('_token') || '')
   const consoleTokenFromLocalStorage = localStorage?.getItem('console_token')
   const refreshTokenFromLocalStorage = localStorage?.getItem('refresh_token')
   const pathname = usePathname()
@@ -34,7 +35,6 @@ const SwrInitor = ({
       return true
     }
     catch (error) {
-      console.error(error)
       return false
     }
   }, [])
@@ -42,15 +42,34 @@ const SwrInitor = ({
   useEffect(() => {
     (async () => {
       try {
+        // Handle URL token first, before any other checks
+        if (urlToken) {
+          localStorage.setItem('console_token', urlToken)
+          setInit(true)
+          // Use window.history to preserve the token for the first request
+          const newUrl = `${window.location.pathname}${window.location.hash}`
+          window.history.replaceState({}, '', newUrl)
+          return
+        }
+
         const isFinished = await isSetupFinished()
+
         if (!isFinished) {
           router.replace('/install')
           return
         }
-        if (!((consoleToken && refreshToken) || (consoleTokenFromLocalStorage && refreshTokenFromLocalStorage))) {
+
+        // Check for valid tokens, including single token auth
+        const hasValidTokens = consoleToken
+                             || consoleTokenFromLocalStorage
+                             || (consoleToken && refreshToken)
+                             || (consoleTokenFromLocalStorage && refreshTokenFromLocalStorage)
+
+        if (!hasValidTokens) {
           router.replace('/signin')
           return
         }
+
         if (searchParams.has('access_token') || searchParams.has('refresh_token')) {
           consoleToken && localStorage.setItem('console_token', consoleToken)
           refreshToken && localStorage.setItem('refresh_token', refreshToken)
@@ -63,7 +82,7 @@ const SwrInitor = ({
         router.replace('/signin')
       }
     })()
-  }, [isSetupFinished, router, pathname, searchParams, consoleToken, refreshToken, consoleTokenFromLocalStorage, refreshTokenFromLocalStorage])
+  }, [isSetupFinished, router, pathname, searchParams, consoleToken, refreshToken, urlToken, consoleTokenFromLocalStorage, refreshTokenFromLocalStorage])
 
   return init
     ? (

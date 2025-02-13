@@ -127,6 +127,20 @@ function requiredWebSSOLogin() {
 }
 
 function getAccessToken(isPublicAPI?: boolean) {
+  // Add detailed debugging
+
+  // Check for URL token first
+  const urlParams = new URLSearchParams(window.location.search)
+
+  const urlToken = urlParams.get('_token')
+
+  if (urlToken) {
+    localStorage.setItem('console_token', urlToken)
+    const newUrl = window.location.pathname + window.location.hash
+    window.history.replaceState({}, '', newUrl)
+    return urlToken
+  }
+
   if (isPublicAPI) {
     const sharedToken = globalThis.location.pathname.split('/').slice(-1)[0]
     const accessToken = localStorage.getItem('token') || JSON.stringify({ [sharedToken]: '' })
