@@ -146,7 +146,7 @@ x-shared-env: &shared-api-worker-env
   SUPABASE_API_KEY: ${SUPABASE_API_KEY:-your-access-key}
   SUPABASE_URL: ${SUPABASE_URL:-your-server-url}
   VECTOR_STORE: ${VECTOR_STORE:-weaviate}
-  WEAVIATE_ENDPOINT: ${WEAVIATE_ENDPOINT:-http://localhost:8080}
+  WEAVIATE_ENDPOINT: ${WEAVIATE_ENDPOINT:-http://localhost:50051}
   WEAVIATE_API_KEY: ${WEAVIATE_API_KEY:-WVF5YThaHlkYwhGUSmCRgsX3tD5ngdN8pkih}
   WEAVIATE_GRPC_ENABLED: ${WEAVIATE_GRPC_ENABLED:-true}
   WEAVIATE_BATCH_SIZE: ${WEAVIATE_BATCH_SIZE:-100}
@@ -648,9 +648,6 @@ services:
       AUTHENTICATION_APIKEY_USERS: ${WEAVIATE_AUTHENTICATION_APIKEY_USERS:-hello@chainainexus.com}
       AUTHORIZATION_ADMINLIST_ENABLED: ${WEAVIATE_AUTHORIZATION_ADMINLIST_ENABLED:-true}
       AUTHORIZATION_ADMINLIST_USERS: ${WEAVIATE_AUTHORIZATION_ADMINLIST_USERS:-hello@chainainexus.com}
-    ports:
-    - 8080:8080
-    - 50051:50051
 
   # Qdrant vector store.
   # (if used, you need to set VECTOR_STORE to qdrant in the api & worker service.)
