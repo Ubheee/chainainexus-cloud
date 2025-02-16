@@ -1,0 +1,622 @@
+app:
+  description: Translate the white paper of any project to understand it's core value.
+  icon: 🤖
+  icon_background: '#FFEAD5'
+  mode: workflow
+  name: 'Web3 White Paper Translation '
+  use_icon_as_answer_icon: false
+kind: app
+version: 0.1.5
+workflow:
+  conversation_variables: []
+  environment_variables: []
+  features:
+    file_upload:
+      allowed_file_extensions:
+      - .JPG
+      - .JPEG
+      - .PNG
+      - .GIF
+      - .WEBP
+      - .SVG
+      allowed_file_types:
+      - image
+      allowed_file_upload_methods:
+      - local_file
+      - remote_url
+      enabled: false
+      fileUploadConfig:
+        audio_file_size_limit: 50
+        batch_count_limit: 5
+        file_size_limit: 15
+        image_file_size_limit: 10
+        video_file_size_limit: 100
+        workflow_file_upload_limit: 10
+      image:
+        enabled: false
+        number_limits: 3
+        transfer_methods:
+        - local_file
+        - remote_url
+      number_limits: 3
+    opening_statement: ''
+    retriever_resource:
+      enabled: false
+    sensitive_word_avoidance:
+      enabled: false
+    speech_to_text:
+      enabled: false
+    suggested_questions: []
+    suggested_questions_after_answer:
+      enabled: false
+    text_to_speech:
+      enabled: false
+      language: ''
+      voice: ''
+  graph:
+    edges:
+    - data:
+        isInIteration: false
+        sourceType: start
+        targetType: code
+      id: 1711067409646-source-1717916867969-target
+      source: '1711067409646'
+      sourceHandle: source
+      target: '1717916867969'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: code
+        targetType: iteration
+      id: 1717916867969-source-1717916955547-target
+      source: '1717916867969'
+      sourceHandle: source
+      target: '1717916955547'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: true
+        iteration_id: '1717916955547'
+        sourceType: llm
+        targetType: llm
+      id: 1717916961837-source-1717916977413-target
+      source: '1717916961837'
+      sourceHandle: source
+      target: '1717916977413'
+      targetHandle: target
+      type: custom
+      zIndex: 1002
+    - data:
+        isInIteration: true
+        iteration_id: '1717916955547'
+        sourceType: llm
+        targetType: llm
+      id: 1717916977413-source-1717916984996-target
+      source: '1717916977413'
+      sourceHandle: source
+      target: '1717916984996'
+      targetHandle: target
+      type: custom
+      zIndex: 1002
+    - data:
+        isInIteration: true
+        iteration_id: '1717916955547'
+        sourceType: llm
+        targetType: llm
+      id: 1717916984996-source-1717916991709-target
+      source: '1717916984996'
+      sourceHandle: source
+      target: '1717916991709'
+      targetHandle: target
+      type: custom
+      zIndex: 1002
+    - data:
+        isInIteration: false
+        sourceType: iteration
+        targetType: template-transform
+      id: 1717916955547-source-1717917057450-target
+      source: '1717916955547'
+      sourceHandle: source
+      target: '1717917057450'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: template-transform
+        targetType: end
+      id: 1717917057450-source-1711068257370-target
+      source: '1717917057450'
+      sourceHandle: source
+      target: '1711068257370'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: true
+        iteration_id: '1717916955547'
+        sourceType: iteration-start
+        targetType: llm
+      id: 1717916955547start0-source-1717916961837-target
+      source: 1717916955547start0
+      sourceHandle: source
+      target: '1717916961837'
+      targetHandle: target
+      type: custom
+      zIndex: 1002
+    nodes:
+    - data:
+        desc: ''
+        selected: false
+        title: Start
+        type: start
+        variables:
+        - label: Input Text
+          max_length: null
+          options: []
+          required: true
+          type: paragraph
+          variable: input_text
+      dragging: false
+      height: 90
+      id: '1711067409646'
+      position:
+        x: 30
+        y: 301.5
+      positionAbsolute:
+        x: 30
+        y: 301.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        outputs:
+        - value_selector:
+          - '1717917057450'
+          - output
+          variable: final
+        selected: false
+        title: End
+        type: end
+      height: 90
+      id: '1711068257370'
+      position:
+        x: 2291
+        y: 301.5
+      positionAbsolute:
+        x: 2291
+        y: 301.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        code: "\ndef main(input_text: str) -> str:\n    token_limit = 1000\n    overlap\
+          \ = 100\n    chunk_size = int(token_limit * 6 * (4/3))\n\n        # Initialize\
+          \ variables\n    chunks = []\n    start_index = 0\n    text_length = len(input_text)\n\
+          \n    # Loop until the end of the text is reached\n    while start_index\
+          \ < text_length:\n        # If we are not at the beginning, adjust the start_index\
+          \ to ensure overlap\n        if start_index > 0:\n            start_index\
+          \ -= overlap\n\n        # Calculate end index for the current chunk\n  \
+          \      end_index = start_index + chunk_size\n        if end_index > text_length:\n\
+          \            end_index = text_length\n\n        # Add the current chunk\
+          \ to the list\n        chunks.append(input_text[start_index:end_index])\n\
+          \n        # Update the start_index for the next chunk\n        start_index\
+          \ += chunk_size\n\n    return {\n        \"chunks\": chunks,\n    }\n"
+        code_language: python3
+        dependencies: []
+        desc: 'token_limit = 1000
+
+          overlap = 100'
+        outputs:
+          chunks:
+            children: null
+            type: array[string]
+        selected: false
+        title: Code
+        type: code
+        variables:
+        - value_selector:
+          - '1711067409646'
+          - input_text
+          variable: input_text
+      height: 98
+      id: '1717916867969'
+      position:
+        x: 336
+        y: 301.5
+      positionAbsolute:
+        x: 336
+        y: 301.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: 'Take good care on maximum number of iterations.  '
+        error_handle_mode: terminated
+        height: 203
+        is_parallel: false
+        iterator_selector:
+        - '1717916867969'
+        - chunks
+        output_selector:
+        - '1717916991709'
+        - text
+        output_type: array[string]
+        parallel_nums: 10
+        selected: false
+        startNodeType: llm
+        start_node_id: 1717916955547start0
+        title: Iteration
+        type: iteration
+        width: 1289
+      height: 203
+      id: '1717916955547'
+      position:
+        x: 638
+        y: 301.5
+      positionAbsolute:
+        x: 638
+        y: 301.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 1289
+      zIndex: 1
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        isInIteration: true
+        isIterationStart: true
+        iteration_id: '1717916955547'
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: gpt-3.5-turbo
+          provider: openai
+        prompt_template:
+        - id: 7261280b-cb27-4f84-8363-b93e09246d16
+          role: system
+          text: "<Task> Identify the technical terms in the users input. Use the following\
+            \ format {XXX} -> {XXX} to show the corresponding technical terms before\
+            \ and after translation. \n\n<Input Text> \n{{#1717916955547.item#}}\n\
+            \n<Example>\n| 英文 | 中文 |\n| --- | --- |\n| Prompt Engineering | 提示词工程\
+            \ |\n| Text Generation  | 文本生成 |\n| Token  | Token |\n| Prompt  | 提示词\
+            \ |\n| Meta Prompting  | 元提示 |\n| diffusion models  | 扩散模型 |\n| Agent\
+            \  | 智能体 |\n| Transformer  | Transformer |\n| Zero Shot  | 零样本 |\n| Few\
+            \ Shot  | 少样本 |\n| chat window  | 聊天 |\n| context | 上下文 |\n| stock photo\
+            \  | 图库照片 |\n\n\n<Technical Terms> "
+        selected: false
+        title: 'Identify Terms '
+        type: llm
+        variables: []
+        vision:
+          configs:
+            detail: high
+          enabled: false
+      extent: parent
+      height: 98
+      id: '1717916961837'
+      parentId: '1717916955547'
+      position:
+        x: 117
+        y: 85
+      positionAbsolute:
+        x: 755
+        y: 386.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+      zIndex: 1001
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        isInIteration: true
+        iteration_id: '1717916955547'
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: gpt-3.5-turbo
+          provider: openai
+        prompt_template:
+        - id: 05e03f0d-c1a9-43ab-b4c0-44b55049434d
+          role: system
+          text: "<Task> You are a professional translator proficient in Simplified\
+            \ Chinese especially skilled in translating professional academic papers\
+            \ into easy-to-understand popular science articles. Please help me translate\
+            \ the following english paragraph into Chinese, in a style similar to\
+            \ Chinese popular science articles .\n<Constraints> \nTranslate directly\
+            \ based on the English content, maintain the original format and do not\
+            \ omit any information. \n<Before Translation> \n{{#1717916955547.item#}}\n\
+            <Terms>\n{{#1717916961837.text#}}\n<Direct Translation> "
+        selected: false
+        title: 1st Translation
+        type: llm
+        variables: []
+        vision:
+          configs:
+            detail: high
+          enabled: false
+      extent: parent
+      height: 98
+      id: '1717916977413'
+      parentId: '1717916955547'
+      position:
+        x: 421
+        y: 85
+      positionAbsolute:
+        x: 1059
+        y: 386.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+      zIndex: 1002
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        isInIteration: true
+        iteration_id: '1717916955547'
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: gpt-3.5-turbo
+          provider: openai
+        prompt_template:
+        - id: 9e6cc050-465e-4632-abc9-411acb255a95
+          role: system
+          text: "<Task>\nBased on the results of the direct translation, point out\
+            \ specific issues it have. Accurate descriptions are required, avoiding\
+            \ vague statements, and there's no need to add content or formats that\
+            \ were not present in the original text, including but not limited to:\
+            \ \n- inconsistent with chinese expression habits, clearly indicate where\
+            \ it does not conform\n- Clumsy sentences, specify the location, no need\
+            \ to offer suggestions for modification, which will be fixed during free\
+            \ translation\n- Obscure and difficult to understand, attempts to explain\
+            \ may be made\n- 无漏译（原⽂中的关键词、句⼦、段落都应体现在译⽂中）。\n- ⽆错译（看错原⽂、误解原⽂意思均算错译）。\n\
+            - ⽆有意增加或者删减的原⽂内容（翻译并⾮创作，需尊重作者观 点；可以适当加译者注说明）。\n- 译⽂流畅，符合中⽂表达习惯。\n- 关于⼈名的翻译。技术图书中的⼈名通常不翻译，但是⼀些众所\
+            \ 周知的⼈名需⽤中⽂（如乔布斯）。\n- 关于书名的翻译。有中⽂版的图书，请⽤中⽂版书名；⽆中⽂版 的图书，直接⽤英⽂书名。\n- 关于图表的翻译。表格中的表题、表字和注解等均需翻译。图题\
+            \ 需要翻译。界⾯截图不需要翻译图字。解释性图需要按照中英⽂ 对照格式给出图字翻译。\n- 关于英⽂术语的表述。英⽂术语⾸次出现时，应该根据该术语的\
+            \ 流⾏情况，优先使⽤简写形式，并在其后使⽤括号加英⽂、中⽂ 全称注解，格式为（举例）：HTML（Hypertext Markup Language，超⽂本标识语⾔）。然后在下⽂中直接使⽤简写形\
+            \ 式。当然，必要时也可以根据语境使⽤中、英⽂全称。\n- 关于代码清单和代码⽚段。原书中包含的程序代码不要求译者录 ⼊，但应该使⽤“原书P99⻚代码1”（即原书第99⻚中的第⼀段代\
+            \ 码）的格式作出标注。同时，译者应该在有条件的情况下检核代 码的正确性，对发现的错误以译者注形式说明。程序代码中的注 释要求翻译，如果译稿中没有代码，则应该以⼀句英⽂（注释）\
+            \ ⼀句中⽂（注释）的形式给出注释。\n- 关于标点符号。译稿中的标点符号要遵循中⽂表达习惯和中⽂标 点符号的使⽤习惯，不能照搬原⽂的标点符号。\n\
+            \n<Direct Translation>\n{{#1717916977413.text#}}\n<Original Text>\n{{#1717916955547.item#}}\n\
+            <Terms>\n{{#1717916961837.text#}}\n<Problems with the Direct Translation>"
+        selected: true
+        title: 'Problems '
+        type: llm
+        variables: []
+        vision:
+          configs:
+            detail: high
+          enabled: false
+      extent: parent
+      height: 98
+      id: '1717916984996'
+      parentId: '1717916955547'
+      position:
+        x: 725
+        y: 85
+      positionAbsolute:
+        x: 1363
+        y: 386.5
+      selected: true
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+      zIndex: 1002
+    - data:
+        context:
+          enabled: false
+          variable_selector: []
+        desc: ''
+        isInIteration: true
+        iteration_id: '1717916955547'
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: gpt-3.5-turbo
+          provider: openai
+        prompt_template:
+        - id: 4d7ae758-2d7b-4404-ad9f-d6748ee64439
+          role: system
+          text: "<Task>\nBased on the results of the direct translation in the first\
+            \ step and the problems identified in the second step, re-translate to\
+            \ achieve a meaning-based interpretation. Ensure the original intent of\
+            \ the content is preserved while making it easier to understand and more\
+            \ in line with Chinese expression habits. All the while maintaining the\
+            \ original format unchanged. \n\n<Guidance>\n- inconsistent with chinese\
+            \ expression habits, clearly indicate where it does not conform\n- Clumsy\
+            \ sentences, specify the location, no need to offer suggestions for modification,\
+            \ which will be fixed during free translation\n- Obscure and difficult\
+            \ to understand, attempts to explain may be made\n- 无漏译（原⽂中的关键词、句⼦、段落都应体现在译⽂中）。\n\
+            - ⽆错译（看错原⽂、误解原⽂意思均算错译）。\n- ⽆有意增加或者删减的原⽂内容（翻译并⾮创作，需尊重作者观 点；可以适当加译者注说明）。\n\
+            - 译⽂流畅，符合中⽂表达习惯。\n- 关于⼈名的翻译。技术图书中的⼈名通常不翻译，但是⼀些众所 周知的⼈名需⽤中⽂（如乔布斯）。\n- 关于书名的翻译。有中⽂版的图书，请⽤中⽂版书名；⽆中⽂版\
+            \ 的图书，直接⽤英⽂书名。\n- 关于图表的翻译。表格中的表题、表字和注解等均需翻译。图题 需要翻译。界⾯截图不需要翻译图字。解释性图需要按照中英⽂\
+            \ 对照格式给出图字翻译。\n- 关于英⽂术语的表述。英⽂术语⾸次出现时，应该根据该术语的 流⾏情况，优先使⽤简写形式，并在其后使⽤括号加英⽂、中⽂\
+            \ 全称注解，格式为（举例）：HTML（Hypertext Markup Language，超⽂本标识语⾔）。然后在下⽂中直接使⽤简写形 式。当然，必要时也可以根据语境使⽤中、英⽂全称。\n\
+            - 关于代码清单和代码⽚段。原书中包含的程序代码不要求译者录 ⼊，但应该使⽤“原书P99⻚代码1”（即原书第99⻚中的第⼀段代 码）的格式作出标注。同时，译者应该在有条件的情况下检核代\
+            \ 码的正确性，对发现的错误以译者注形式说明。程序代码中的注 释要求翻译，如果译稿中没有代码，则应该以⼀句英⽂（注释） ⼀句中⽂（注释）的形式给出注释。\n\
+            - 关于标点符号。译稿中的标点符号要遵循中⽂表达习惯和中⽂标 点符号的使⽤习惯，不能照搬原⽂的标点符号。\n\n<Direct Translation>\
+            \ \n{{#1717916977413.text#}}\n<problems in the first translation>\n{{#1717916984996.text#}}\n\
+            <Original Text>\n{{#1711067409646.input_text#}}\n<Terms>\n{{#1717916961837.text#}}\n\
+            <Free Translation> "
+        selected: false
+        title: '2nd Translation '
+        type: llm
+        variables: []
+        vision:
+          configs:
+            detail: high
+          enabled: false
+      extent: parent
+      height: 98
+      id: '1717916991709'
+      parentId: '1717916955547'
+      position:
+        x: 1029
+        y: 85
+      positionAbsolute:
+        x: 1667
+        y: 386.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+      zIndex: 1002
+    - data:
+        desc: 'Combine all chunks of translation. '
+        selected: false
+        template: '{{ translated_text | join('' '') }}'
+        title: Template
+        type: template-transform
+        variables:
+        - value_selector:
+          - '1717916955547'
+          - output
+          variable: translated_text
+      height: 82
+      id: '1717917057450'
+      position:
+        x: 1987
+        y: 301.5
+      positionAbsolute:
+        x: 1987
+        y: 301.5
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        author: CAN20
+        desc: ''
+        height: 186
+        selected: false
+        showAuthor: true
+        text: '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"Code
+          node separates the input_text into chunks with length of token_limit. Each
+          chunk overlap with each other to make sure the texts are consistent.  ","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"The
+          code node outputs an array of segmented texts of input_texts. ","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}'
+        theme: blue
+        title: ''
+        type: ''
+        width: 340
+      height: 186
+      id: '1718990593686'
+      position:
+        x: 259.3026056936437
+        y: 451.6924912936374
+      positionAbsolute:
+        x: 259.3026056936437
+        y: 451.6924912936374
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 340
+    - data:
+        author: CAN20
+        desc: ''
+        height: 128
+        selected: false
+        showAuthor: true
+        text: '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"Iterate
+          through all the elements in output of the code node and translate each chunk
+          using a three steps translation workflow. ","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}'
+        theme: blue
+        title: ''
+        type: ''
+        width: 355
+      height: 128
+      id: '1718991836605'
+      position:
+        x: 764.3891977435923
+        y: 530.8917807505335
+      positionAbsolute:
+        x: 764.3891977435923
+        y: 530.8917807505335
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 355
+    - data:
+        author: CAN20
+        desc: ''
+        height: 126
+        selected: false
+        showAuthor: true
+        text: '{"root":{"children":[{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"Avoid
+          using a high token_limit, LLM''s performance decreases with longer context
+          length for gpt-4o. ","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[],"direction":null,"format":"","indent":0,"type":"paragraph","version":1,"textFormat":0},{"children":[{"detail":0,"format":0,"mode":"normal","style":"","text":"Recommend
+          to use less than or equal to 1000 tokens. ","type":"text","version":1}],"direction":"ltr","format":"","indent":0,"type":"paragraph","version":1,"textFormat":0}],"direction":"ltr","format":"","indent":0,"type":"root","version":1}}'
+        theme: yellow
+        title: ''
+        type: ''
+        width: 351
+      height: 126
+      id: '1718991882984'
+      position:
+        x: 304.49115824454367
+        y: 148.4042994607805
+      positionAbsolute:
+        x: 304.49115824454367
+        y: 148.4042994607805
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-note
+      width: 351
+    - data:
+        desc: ''
+        isInIteration: true
+        selected: false
+        title: ''
+        type: iteration-start
+      draggable: false
+      height: 48
+      id: 1717916955547start0
+      parentId: '1717916955547'
+      position:
+        x: 24
+        y: 68
+      positionAbsolute:
+        x: 662
+        y: 369.5
+      selectable: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom-iteration-start
+      width: 44
+      zIndex: 1002
+    viewport:
+      x: -669.4426462170406
+      y: -278.4511967186953
+      zoom: 1.1359777709904446
