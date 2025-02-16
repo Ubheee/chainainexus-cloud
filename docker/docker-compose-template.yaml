@@ -237,6 +237,8 @@ services:
       AUTHENTICATION_APIKEY_USERS: ${WEAVIATE_AUTHENTICATION_APIKEY_USERS:-hello@chainainexus.com}
       AUTHORIZATION_ADMINLIST_ENABLED: ${WEAVIATE_AUTHORIZATION_ADMINLIST_ENABLED:-true}
       AUTHORIZATION_ADMINLIST_USERS: ${WEAVIATE_AUTHORIZATION_ADMINLIST_USERS:-hello@chainainexus.com}
+    ports:
+      - 50051:50051
 
   # Qdrant vector store.
   # (if used, you need to set VECTOR_STORE to qdrant in the api & worker service.)
