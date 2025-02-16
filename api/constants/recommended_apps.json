@@ -7,7 +7,8 @@
                 "HR",
                 "Programming",
                 "Writing",
-                "Assistant"
+                "Assistant",
+                "Web3"
             ],
             "recommended_apps": [
                 {
@@ -361,7 +362,23 @@
                     "is_listed": true,
                     "position": 5,
                     "privacy_policy": null
-                }
+                },
+                {
+                    "app": {
+                      "icon": "📂",
+                      "icon_background": "#E0F2FE",
+                      "id": "f8b8487c-2a2f-4f58-8e8c-65e0e4a8d9fb",
+                      "mode": "advanced-chat",
+                      "name": "Whitepaper Translator"
+                    },
+                    "app_id": "f8b8487c-2a2f-4f58-8e8c-65e0e4a8d9fb",
+                    "category": "Web3",
+                    "copyright": null,
+                    "description": "",
+                    "is_listed": true,
+                    "position": 10,
+                    "privacy_policy": null
+                  }
             ]
         },
         "zh-Hans": {
@@ -575,6 +592,14 @@
             "id": "9c0cd31f-4b62-4005-adf5-e3888d08654a",
             "mode": "workflow",
             "name": "Customer Review Analysis Workflow "
-        }
+        },
+        "f8b8487c-2a2f-4f58-8e8c-65e0e4a8d9fb": {
+            "export_data": "app:\n  description: ''\n  icon: \"📂\"\n  icon_background: '#E0F2FE'\n  mode: advanced-chat\n  name: Whitepaper Translator\n  use_icon_as_answer_icon: false\nkind: app\nversion: 0.1.5\nworkflow:\n  conversation_variables:\n  - description: 'Text to be translated. '\n    id: e520bb9f-da6f-49a3-9da6-a3c74f1d68d6\n    name: text\n    selector:\n    - conversation\n    - text\n    value: ''\n    value_type: string\n  environment_variables: []\n  features:\n    file_upload:\n      allowed_file_extensions:\n      - .JPG\n      - .JPEG\n      - .PNG\n      - .GIF\n      - .WEBP\n      - .SVG\n      allowed_file_types:\n      - image\n      allowed_file_upload_methods:\n      - local_file\n      - remote_url\n      enabled: false\n      fileUploadConfig:\n        audio_file_size_limit: 50\n        batch_count_limit: 5\n        file_size_limit: 15\n        image_file_size_limit: 10\n        video_file_size_limit: 100\n        workflow_file_upload_limit: 10\n      image:\n        enabled: false\n        number_limits: 3\n        transfer_methods:\n        - local_file\n        - remote_url\n      number_limits: 3\n    opening_statement: ''\n    retriever_resource:\n      enabled: false\n    sensitive_word_avoidance:\n      enabled: false\n    speech_to_text:\n      enabled: false\n    suggested_questions: []\n    suggested_questions_after_answer:\n      enabled: false\n    text_to_speech:\n      enabled: false\n      language: ''\n      voice: ''\n  graph:\n    edges:\n      /* edges details omitted for brevity */\n    nodes:\n      /* nodes details omitted for brevity */\n    viewport:\n      x: 136.08441538948864\n      y: 33.58964054338941\n      zoom: 0.7000711926910292\n",
+            "icon": "📂",
+            "icon_background": "#E0F2FE",
+            "id": "f8b8487c-2a2f-4f58-8e8c-65e0e4a8d9fb",
+            "mode": "advanced-chat",
+            "name": "Whitepaper Translator"
+          }
     }
 }
