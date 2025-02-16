@@ -243,7 +243,7 @@ services:
   # Qdrant vector store.
   # (if used, you need to set VECTOR_STORE to qdrant in the api & worker service.)
   qdrant:
-    image: chainainexus/qdrant:v1.7.3
+    image: dify/qdrant:v1.7.3
     profiles:
       - qdrant
     restart: always
