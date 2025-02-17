@@ -1,6 +1,7 @@
 app:
-  description: ''
-  icon: 📑
+  description: An intelligent terminology assistant designed to decode Web3 jargon
+    in real-time.
+  icon: 📂
   icon_background: '#E0F2FE'
   mode: advanced-chat
   name: Web3 Glossary
@@ -56,20 +57,11 @@ workflow:
   graph:
     edges:
     - data:
-        sourceType: start
-        targetType: knowledge-retrieval
-      id: 1711528914102-1711528915811
-      source: '1711528914102'
-      sourceHandle: source
-      target: '1711528915811'
-      targetHandle: target
-      type: custom
-    - data:
         isInIteration: false
         sourceType: llm
         targetType: answer
-      id: 1711528917469-source-1711528919501-target
-      source: '1711528917469'
+      id: 1739775191885-source-1711528919501-target
+      source: '1739775191885'
       sourceHandle: source
       target: '1711528919501'
       targetHandle: target
@@ -78,34 +70,77 @@ workflow:
     - data:
         isInIteration: false
         sourceType: knowledge-retrieval
-        targetType: if-else
-      id: 1711528915811-source-1739689676583-target
+        targetType: llm
+      id: 1711528915811-source-1739775191885-target
       source: '1711528915811'
       sourceHandle: source
-      target: '1739689676583'
+      target: '1739775191885'
       targetHandle: target
       type: custom
       zIndex: 0
     - data:
         isInIteration: false
-        sourceType: if-else
+        sourceType: tool
         targetType: llm
-      id: 1739689676583-false-1711528917469-target
-      selected: false
-      source: '1739689676583'
-      sourceHandle: 'false'
-      target: '1711528917469'
+      id: 1739775427443-source-1739775191885-target
+      source: '1739775427443'
+      sourceHandle: source
+      target: '1739775191885'
       targetHandle: target
       type: custom
       zIndex: 0
     - data:
         isInIteration: false
-        sourceType: if-else
+        sourceType: start
         targetType: llm
-      id: 1739689676583-true-1711528917469-target
-      source: '1739689676583'
-      sourceHandle: 'true'
-      target: '1711528917469'
+      id: 1711528914102-source-1739779450536-target
+      source: '1711528914102'
+      sourceHandle: source
+      target: '1739779450536'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: knowledge-retrieval
+      id: 1739779450536-source-1711528915811-target
+      source: '1739779450536'
+      sourceHandle: source
+      target: '1711528915811'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: llm
+        targetType: tool
+      id: 1739779450536-source-1739775427443-target
+      source: '1739779450536'
+      sourceHandle: source
+      target: '1739775427443'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: start
+        targetType: parameter-extractor
+      id: 1711528914102-source-1739779726128-target
+      source: '1711528914102'
+      sourceHandle: source
+      target: '1739779726128'
+      targetHandle: target
+      type: custom
+      zIndex: 0
+    - data:
+        isInIteration: false
+        sourceType: parameter-extractor
+        targetType: llm
+      id: 1739779726128-source-1739775191885-target
+      source: '1739779726128'
+      sourceHandle: source
+      target: '1739775191885'
       targetHandle: target
       type: custom
       zIndex: 0
@@ -119,11 +154,11 @@ workflow:
       height: 54
       id: '1711528914102'
       position:
-        x: -332.4097172297261
-        y: 164.6240790737603
+        x: -375.7142857142857
+        y: 344.57142857142856
       positionAbsolute:
-        x: -332.4097172297261
-        y: 164.6240790737603
+        x: -375.7142857142857
+        y: 344.57142857142856
       selected: false
       sourcePosition: right
       targetPosition: left
@@ -150,8 +185,8 @@ workflow:
               embedding_provider_name: openai
               vector_weight: 0.5
         query_variable_selector:
-        - '1711528914102'
-        - sys.query
+        - '1739779450536'
+        - text
         retrieval_mode: multiple
         selected: false
         single_retrieval_config:
@@ -171,11 +206,31 @@ workflow:
       height: 152
       id: '1711528915811'
       position:
-        x: 146.1467093350759
-        y: 30.316840189558008
+        x: 496.57142857142856
+        y: 296
       positionAbsolute:
-        x: 146.1467093350759
-        y: 30.316840189558008
+        x: 496.57142857142856
+        y: 296
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        answer: '{{#1739775191885.text#}}'
+        desc: ''
+        selected: false
+        title: Answer
+        type: answer
+        variables: []
+      height: 103
+      id: '1711528919501'
+      position:
+        x: 1246
+        y: 276
+      positionAbsolute:
+        x: 1246
+        y: 276
       selected: false
       sourcePosition: right
       targetPosition: left
@@ -190,89 +245,157 @@ workflow:
         desc: ''
         model:
           completion_params:
-            frequency_penalty: 0
-            max_tokens: 512
-            presence_penalty: 0
             temperature: 0.7
-            top_p: 1
           mode: chat
-          name: gpt-3.5-turbo-1106
+          name: gpt-3.5-turbo
           provider: openai
         prompt_template:
-        - edition_type: basic
-          id: 679f3173-c16b-41cc-b1a8-7526c35e286d
+        - id: de447275-3d92-4d0a-9dab-7ff1540671ca
           role: system
-          text: You are a helpful AI assistant.
-        selected: true
-        title: LLM
+          text: 'You are a web3 professional that know the whole history of Web3.
+            You gonna explain user''s web3 glossary with intuitive and humorous way
+            that people with minimum knowledge of web3 can understand.  the output
+            prefer to be{{#1739779726128.languge#}}
+
+            <Context>
+
+            {{#context#}}
+
+            <Search>
+
+            {{#1739775427443.text#}}'
+        - id: 53ecacf2-3875-4792-ab3d-3f65a0ddb3d3
+          role: user
+          text: '{{#sys.query#}}'
+        selected: false
+        title: LLM Aggregator
         type: llm
         variables: []
         vision:
           enabled: false
       height: 98
-      id: '1711528917469'
+      id: '1739775191885'
       position:
-        x: 879.2959148868135
-        y: 175.2253261410246
+        x: 942
+        y: 276
       positionAbsolute:
-        x: 879.2959148868135
-        y: 175.2253261410246
+        x: 942
+        y: 276
       selected: true
       sourcePosition: right
       targetPosition: left
       type: custom
       width: 244
     - data:
-        answer: '{{#1711528917469.text#}}'
         desc: ''
+        provider_id: duckduckgo
+        provider_name: duckduckgo
+        provider_type: builtin
+        retry_config:
+          max_retries: 3
+          retry_enabled: false
+          retry_interval: 1000
         selected: false
-        title: Answer
-        type: answer
-        variables: []
-      height: 103
-      id: '1711528919501'
+        title: DuckDuckGo Search
+        tool_configurations:
+          max_results: 5
+          query_prefix: ''
+          require_summary: 0
+        tool_label: DuckDuckGo Search
+        tool_name: ddgo_search
+        tool_parameters:
+          query:
+            type: mixed
+            value: what is {{#1739779450536.text#}}
+        type: tool
+      height: 142
+      id: '1739775427443'
       position:
-        x: 1350.4287144564694
-        y: 280.47464751630037
+        x: 467.9999999999999
+        y: 499.42857142857144
       positionAbsolute:
-        x: 1350.4287144564694
-        y: 280.47464751630037
+        x: 467.9999999999999
+        y: 499.42857142857144
       selected: false
       sourcePosition: right
       targetPosition: left
       type: custom
       width: 244
     - data:
-        cases:
-        - case_id: 'true'
-          conditions:
-          - comparison_operator: empty
-            id: 648d59e0-fbb8-485a-aa87-8494f1634926
-            value: ''
-            varType: array[object]
-            variable_selector:
-            - '1711528915811'
-            - result
-          id: 'true'
-          logical_operator: and
+        context:
+          enabled: false
+          variable_selector: []
         desc: ''
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: gpt-3.5-turbo
+          provider: openai
+        prompt_template:
+        - id: 40d807ed-9c6f-4caf-a510-861baae79772
+          role: system
+          text: translate users query into English
+        - id: c15ba0d2-9b32-4d4e-8e05-4a7d1950eb43
+          role: user
+          text: '{{#sys.query#}}'
         selected: false
-        title: IF/ELSE
-        type: if-else
-      height: 126
-      id: '1739689676583'
+        title: Query Translator
+        type: llm
+        variables: []
+        vision:
+          enabled: false
+      height: 98
+      id: '1739779450536'
       position:
-        x: 529.3037226758025
-        y: 498.02296049071066
+        x: 46.57142857142844
+        y: 359.6428571428571
       positionAbsolute:
-        x: 529.3037226758025
-        y: 498.02296049071066
+        x: 46.57142857142844
+        y: 359.6428571428571
+      selected: false
+      sourcePosition: right
+      targetPosition: left
+      type: custom
+      width: 244
+    - data:
+        desc: ''
+        instruction: extract the language of the input {{#sys.query#}}
+        model:
+          completion_params:
+            temperature: 0.7
+          mode: chat
+          name: gpt-3.5-turbo
+          provider: openai
+        parameters:
+        - description: the language used in input string
+          name: languge
+          required: true
+          type: string
+        query:
+        - sys
+        - query
+        reasoning_mode: prompt
+        selected: false
+        title: Parameter Extractor
+        type: parameter-extractor
+        variables: []
+        vision:
+          enabled: false
+      height: 98
+      id: '1739779726128'
+      position:
+        x: 73.71428571428591
+        y: 183.92857142857144
+      positionAbsolute:
+        x: 73.71428571428591
+        y: 183.92857142857144
       selected: false
       sourcePosition: right
       targetPosition: left
       type: custom
       width: 244
     viewport:
-      x: 172.44767294761823
-      y: 344.8842757773415
-      zoom: 0.3769045186616564
+      x: -391.03854952637994
+      y: 216.77841741967146
+      zoom: 0.692279641466652

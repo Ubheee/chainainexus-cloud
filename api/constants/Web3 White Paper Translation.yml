@@ -160,14 +160,20 @@ workflow:
           required: true
           type: paragraph
           variable: input_text
+        - label: Target Language
+          max_length: 48
+          options: []
+          required: true
+          type: text-input
+          variable: target_language
       dragging: false
-      height: 90
+      height: 116
       id: '1711067409646'
       position:
-        x: 30
+        x: 30.890196523844622
         y: 301.5
       positionAbsolute:
-        x: 30
+        x: 30.890196523844622
         y: 301.5
       selected: false
       sourcePosition: right
@@ -235,7 +241,7 @@ workflow:
       positionAbsolute:
         x: 336
         y: 301.5
-      selected: false
+      selected: true
       sourcePosition: right
       targetPosition: left
       type: custom
@@ -262,10 +268,10 @@ workflow:
       height: 203
       id: '1717916955547'
       position:
-        x: 638
+        x: 636.5234557794086
         y: 301.5
       positionAbsolute:
-        x: 638
+        x: 636.5234557794086
         y: 301.5
       selected: false
       sourcePosition: right
@@ -293,12 +299,13 @@ workflow:
           text: "<Task> Identify the technical terms in the users input. Use the following\
             \ format {XXX} -> {XXX} to show the corresponding technical terms before\
             \ and after translation. \n\n<Input Text> \n{{#1717916955547.item#}}\n\
-            \n<Example>\n| 英文 | 中文 |\n| --- | --- |\n| Prompt Engineering | 提示词工程\
-            \ |\n| Text Generation  | 文本生成 |\n| Token  | Token |\n| Prompt  | 提示词\
-            \ |\n| Meta Prompting  | 元提示 |\n| diffusion models  | 扩散模型 |\n| Agent\
-            \  | 智能体 |\n| Transformer  | Transformer |\n| Zero Shot  | 零样本 |\n| Few\
-            \ Shot  | 少样本 |\n| chat window  | 聊天 |\n| context | 上下文 |\n| stock photo\
-            \  | 图库照片 |\n\n\n<Technical Terms> "
+            <Target Language>\n{{#1711067409646.target_language#}}\n<Example>\n| 英文\
+            \ | 中文 |\n| --- | --- |\n| Prompt Engineering | 提示词工程 |\n| Text Generation\
+            \  | 文本生成 |\n| Token  | Token |\n| Prompt  | 提示词 |\n| Meta Prompting  |\
+            \ 元提示 |\n| diffusion models  | 扩散模型 |\n| Agent  | 智能体 |\n| Transformer\
+            \  | Transformer |\n| Zero Shot  | 零样本 |\n| Few Shot  | 少样本 |\n| chat\
+            \ window  | 聊天 |\n| context | 上下文 |\n| stock photo  | 图库照片 |\n\n\n<Technical\
+            \ Terms> "
         selected: false
         title: 'Identify Terms '
         type: llm
@@ -312,11 +319,11 @@ workflow:
       id: '1717916961837'
       parentId: '1717916955547'
       position:
-        x: 117
-        y: 85
+        x: 86.79107401795841
+        y: 65
       positionAbsolute:
-        x: 755
-        y: 386.5
+        x: 723.314529797367
+        y: 366.5
       selected: false
       sourcePosition: right
       targetPosition: left
@@ -339,14 +346,15 @@ workflow:
         prompt_template:
         - id: 05e03f0d-c1a9-43ab-b4c0-44b55049434d
           role: system
-          text: "<Task> You are a professional translator proficient in Simplified\
-            \ Chinese especially skilled in translating professional academic papers\
-            \ into easy-to-understand popular science articles. Please help me translate\
-            \ the following english paragraph into Chinese, in a style similar to\
-            \ Chinese popular science articles .\n<Constraints> \nTranslate directly\
-            \ based on the English content, maintain the original format and do not\
-            \ omit any information. \n<Before Translation> \n{{#1717916955547.item#}}\n\
-            <Terms>\n{{#1717916961837.text#}}\n<Direct Translation> "
+          text: "<Task> You are a professional translator proficient in {{#1711067409646.target_language#}}\
+            \ especially skilled in translating professional academic papers into\
+            \ easy-to-understand popular science articles. Please help me translate\
+            \ the following english paragraph into {{#1711067409646.target_language#}},\
+            \ in a style similar to {{#1711067409646.target_language#}} popular science\
+            \ articles .\n<Constraints> \nTranslate directly based on the English\
+            \ content, maintain the original format and do not omit any information.\
+            \ \n<Before Translation> \n{{#1717916955547.item#}}\n<Terms>\n{{#1717916961837.text#}}\n\
+            <Direct Translation> "
         selected: false
         title: 1st Translation
         type: llm
@@ -361,10 +369,10 @@ workflow:
       parentId: '1717916955547'
       position:
         x: 421
-        y: 85
+        y: 84.10980347615538
       positionAbsolute:
-        x: 1059
-        y: 386.5
+        x: 1057.5234557794086
+        y: 385.6098034761554
       selected: false
       sourcePosition: right
       targetPosition: left
@@ -391,21 +399,51 @@ workflow:
             \ specific issues it have. Accurate descriptions are required, avoiding\
             \ vague statements, and there's no need to add content or formats that\
             \ were not present in the original text, including but not limited to:\
-            \ \n- inconsistent with chinese expression habits, clearly indicate where\
-            \ it does not conform\n- Clumsy sentences, specify the location, no need\
-            \ to offer suggestions for modification, which will be fixed during free\
-            \ translation\n- Obscure and difficult to understand, attempts to explain\
-            \ may be made\n- 无漏译（原⽂中的关键词、句⼦、段落都应体现在译⽂中）。\n- ⽆错译（看错原⽂、误解原⽂意思均算错译）。\n\
-            - ⽆有意增加或者删减的原⽂内容（翻译并⾮创作，需尊重作者观 点；可以适当加译者注说明）。\n- 译⽂流畅，符合中⽂表达习惯。\n- 关于⼈名的翻译。技术图书中的⼈名通常不翻译，但是⼀些众所\
-            \ 周知的⼈名需⽤中⽂（如乔布斯）。\n- 关于书名的翻译。有中⽂版的图书，请⽤中⽂版书名；⽆中⽂版 的图书，直接⽤英⽂书名。\n- 关于图表的翻译。表格中的表题、表字和注解等均需翻译。图题\
-            \ 需要翻译。界⾯截图不需要翻译图字。解释性图需要按照中英⽂ 对照格式给出图字翻译。\n- 关于英⽂术语的表述。英⽂术语⾸次出现时，应该根据该术语的\
-            \ 流⾏情况，优先使⽤简写形式，并在其后使⽤括号加英⽂、中⽂ 全称注解，格式为（举例）：HTML（Hypertext Markup Language，超⽂本标识语⾔）。然后在下⽂中直接使⽤简写形\
-            \ 式。当然，必要时也可以根据语境使⽤中、英⽂全称。\n- 关于代码清单和代码⽚段。原书中包含的程序代码不要求译者录 ⼊，但应该使⽤“原书P99⻚代码1”（即原书第99⻚中的第⼀段代\
-            \ 码）的格式作出标注。同时，译者应该在有条件的情况下检核代 码的正确性，对发现的错误以译者注形式说明。程序代码中的注 释要求翻译，如果译稿中没有代码，则应该以⼀句英⽂（注释）\
-            \ ⼀句中⽂（注释）的形式给出注释。\n- 关于标点符号。译稿中的标点符号要遵循中⽂表达习惯和中⽂标 点符号的使⽤习惯，不能照搬原⽂的标点符号。\n\
-            \n<Direct Translation>\n{{#1717916977413.text#}}\n<Original Text>\n{{#1717916955547.item#}}\n\
+            \ \n- inconsistent with {{#1711067409646.target_language#}} expression\
+            \ habits, clearly indicate where it does not conform\n- Clumsy sentences,\
+            \ specify the location, no need to offer suggestions for modification,\
+            \ which will be fixed during free translation\n- Obscure and difficult\
+            \ to understand, attempts to explain may be made\n- No omissions (key\
+            \ words, sentences, and paragraphs in the original text should be reflected\
+            \ in the translation).  \n- No mistranslations (misreading the original\
+            \ text or misunderstanding its meaning both count as mistranslations).\
+            \  \n- No intentional addition or omission of content from the original\
+            \ text (translation is not creation, and respect for the author's viewpoint\
+            \ is required; translator's notes may be added where appropriate).  \n\
+            - The translation should be fluent and conform to {{{#1711067409646.target_language#}}\
+            \ expression habits.  \n- Regarding the translation of names. Names in\
+            \ technical books are usually not translated, but well-known names should\
+            \ be translated into {{#1711067409646.target_language#}} (e.g., 乔布斯 in\
+            \ Chinese for Steve Jobs).  \n- Regarding the translation of titles. For\
+            \ books with {{#1711067409646.target_language#}} editions, use the {{#1711067409646.target_language#}}\
+            \ title; for books without {{#1711067409646.target_language#}} editions,\
+            \ use the English title directly.  \n- Regarding the translation of tables\
+            \ and figures. Table titles, captions, and annotations in tables should\
+            \ all be translated. Figure titles should be translated. Screenshots of\
+            \ interfaces do not require translation of captions. Explanatory figures\
+            \ should provide translations of captions in a bilingual format.  \n-\
+            \ Regarding the expression of English terminology. When an English term\
+            \ first appears, prioritize using its abbreviated form, followed by the\
+            \ English and {{#1711067409646.target_language#}} full names in parentheses,\
+            \ e.g., HTML (Hypertext Markup Language, hypertext markup language). Subsequently,\
+            \ use the abbreviated form directly in the text. Of course, the full English\
+            \ or {{#1711067409646.target_language#}} term may also be used where necessary\
+            \ based on context.  \n- Regarding code listings and snippets. The original\
+            \ book's program code does not require the translator to input it, but\
+            \ it should be labeled in the format of \"Code 1 on P99 of the original\
+            \ book\" (i.e., the first code snippet on page 99 of the original book).\
+            \ Additionally, translators should verify the correctness of the code\
+            \ when possible and provide explanations in the form of translator's notes\
+            \ for any errors found. Comments in the program code should be translated.\
+            \ If the translation does not include the code, comments should be given\
+            \ in a bilingual format of one English (comment) followed by one {{#1711067409646.target_language#}}\
+            \ (comment).  \n- Regarding punctuation. Punctuation in the translation\
+            \ should follow {{#1711067409646.target_language#}} expression habits\
+            \ and the rules of {{#1711067409646.target_language#}} punctuation, and\
+            \ should not simply copy the punctuation from the original text.\n\n<Direct\
+            \ Translation>\n{{#1717916977413.text#}}\n<Original Text>\n{{#1717916955547.item#}}\n\
             <Terms>\n{{#1717916961837.text#}}\n<Problems with the Direct Translation>"
-        selected: true
+        selected: false
         title: 'Problems '
         type: llm
         variables: []
@@ -418,12 +456,12 @@ workflow:
       id: '1717916984996'
       parentId: '1717916955547'
       position:
-        x: 725
+        x: 725.9038753734237
         y: 85
       positionAbsolute:
-        x: 1363
+        x: 1362.4273311528323
         y: 386.5
-      selected: true
+      selected: false
       sourcePosition: right
       targetPosition: left
       type: custom
@@ -449,23 +487,53 @@ workflow:
             \ step and the problems identified in the second step, re-translate to\
             \ achieve a meaning-based interpretation. Ensure the original intent of\
             \ the content is preserved while making it easier to understand and more\
-            \ in line with Chinese expression habits. All the while maintaining the\
-            \ original format unchanged. \n\n<Guidance>\n- inconsistent with chinese\
-            \ expression habits, clearly indicate where it does not conform\n- Clumsy\
-            \ sentences, specify the location, no need to offer suggestions for modification,\
-            \ which will be fixed during free translation\n- Obscure and difficult\
-            \ to understand, attempts to explain may be made\n- 无漏译（原⽂中的关键词、句⼦、段落都应体现在译⽂中）。\n\
-            - ⽆错译（看错原⽂、误解原⽂意思均算错译）。\n- ⽆有意增加或者删减的原⽂内容（翻译并⾮创作，需尊重作者观 点；可以适当加译者注说明）。\n\
-            - 译⽂流畅，符合中⽂表达习惯。\n- 关于⼈名的翻译。技术图书中的⼈名通常不翻译，但是⼀些众所 周知的⼈名需⽤中⽂（如乔布斯）。\n- 关于书名的翻译。有中⽂版的图书，请⽤中⽂版书名；⽆中⽂版\
-            \ 的图书，直接⽤英⽂书名。\n- 关于图表的翻译。表格中的表题、表字和注解等均需翻译。图题 需要翻译。界⾯截图不需要翻译图字。解释性图需要按照中英⽂\
-            \ 对照格式给出图字翻译。\n- 关于英⽂术语的表述。英⽂术语⾸次出现时，应该根据该术语的 流⾏情况，优先使⽤简写形式，并在其后使⽤括号加英⽂、中⽂\
-            \ 全称注解，格式为（举例）：HTML（Hypertext Markup Language，超⽂本标识语⾔）。然后在下⽂中直接使⽤简写形 式。当然，必要时也可以根据语境使⽤中、英⽂全称。\n\
-            - 关于代码清单和代码⽚段。原书中包含的程序代码不要求译者录 ⼊，但应该使⽤“原书P99⻚代码1”（即原书第99⻚中的第⼀段代 码）的格式作出标注。同时，译者应该在有条件的情况下检核代\
-            \ 码的正确性，对发现的错误以译者注形式说明。程序代码中的注 释要求翻译，如果译稿中没有代码，则应该以⼀句英⽂（注释） ⼀句中⽂（注释）的形式给出注释。\n\
-            - 关于标点符号。译稿中的标点符号要遵循中⽂表达习惯和中⽂标 点符号的使⽤习惯，不能照搬原⽂的标点符号。\n\n<Direct Translation>\
-            \ \n{{#1717916977413.text#}}\n<problems in the first translation>\n{{#1717916984996.text#}}\n\
-            <Original Text>\n{{#1711067409646.input_text#}}\n<Terms>\n{{#1717916961837.text#}}\n\
-            <Free Translation> "
+            \ in line with {{#1711067409646.target_language#}} expression habits.\
+            \ All the while maintaining the original format unchanged. \n\n<Guidance>\n\
+            - inconsistent with {{#1711067409646.target_language#}} expression habits,\
+            \ clearly indicate where it does not conform\n- Clumsy sentences, specify\
+            \ the location, no need to offer suggestions for modification, which will\
+            \ be fixed during free translation\n- Obscure and difficult to understand,\
+            \ attempts to explain may be made\n- No omissions (key words, sentences,\
+            \ and paragraphs in the original text should be reflected in the translation).\
+            \  \n- No mistranslations (misreading the original text or misunderstanding\
+            \ its meaning both count as mistranslations).  \n- No intentional addition\
+            \ or omission of content from the original text (translation is not creation,\
+            \ and respect for the author's viewpoint is required; translator's notes\
+            \ may be added where appropriate).  \n- The translation should be fluent\
+            \ and conform to {{{#1711067409646.target_language#}} expression habits.\
+            \  \n- Regarding the translation of names. Names in technical books are\
+            \ usually not translated, but well-known names should be translated into\
+            \ {{#1711067409646.target_language#}} (e.g., 乔布斯 in Chinese for Steve\
+            \ Jobs).  \n- Regarding the translation of titles. For books with {{#1711067409646.target_language#}}\
+            \ editions, use the {{#1711067409646.target_language#}} title; for books\
+            \ without {{#1711067409646.target_language#}} editions, use the English\
+            \ title directly.  \n- Regarding the translation of tables and figures.\
+            \ Table titles, captions, and annotations in tables should all be translated.\
+            \ Figure titles should be translated. Screenshots of interfaces do not\
+            \ require translation of captions. Explanatory figures should provide\
+            \ translations of captions in a bilingual format.  \n- Regarding the expression\
+            \ of English terminology. When an English term first appears, prioritize\
+            \ using its abbreviated form, followed by the English and {{#1711067409646.target_language#}}\
+            \ full names in parentheses, e.g., HTML (Hypertext Markup Language, hypertext\
+            \ markup language). Subsequently, use the abbreviated form directly in\
+            \ the text. Of course, the full English or {{#1711067409646.target_language#}}\
+            \ term may also be used where necessary based on context.  \n- Regarding\
+            \ code listings and snippets. The original book's program code does not\
+            \ require the translator to input it, but it should be labeled in the\
+            \ format of \"Code 1 on P99 of the original book\" (i.e., the first code\
+            \ snippet on page 99 of the original book). Additionally, translators\
+            \ should verify the correctness of the code when possible and provide\
+            \ explanations in the form of translator's notes for any errors found.\
+            \ Comments in the program code should be translated. If the translation\
+            \ does not include the code, comments should be given in a bilingual format\
+            \ of one English (comment) followed by one {{#1711067409646.target_language#}}\
+            \ (comment).  \n- Regarding punctuation. Punctuation in the translation\
+            \ should follow {{#1711067409646.target_language#}} expression habits\
+            \ and the rules of {{#1711067409646.target_language#}} punctuation, and\
+            \ should not simply copy the punctuation from the original text.\n<Direct\
+            \ Translation> \n{{#1717916977413.text#}}\n<problems in the first translation>\n\
+            {{#1717916984996.text#}}\n<Original Text>\n{{#1711067409646.input_text#}}\n\
+            <Terms>\n{{#1717916961837.text#}}\n<Free Translation> "
         selected: false
         title: '2nd Translation '
         type: llm
@@ -480,10 +548,10 @@ workflow:
       parentId: '1717916955547'
       position:
         x: 1029
-        y: 85
+        y: 84.10980347615538
       positionAbsolute:
-        x: 1667
-        y: 386.5
+        x: 1665.5234557794086
+        y: 385.6098034761554
       selected: false
       sourcePosition: right
       targetPosition: left
@@ -608,7 +676,7 @@ workflow:
         x: 24
         y: 68
       positionAbsolute:
-        x: 662
+        x: 660.5234557794086
         y: 369.5
       selectable: false
       sourcePosition: right
@@ -617,6 +685,6 @@ workflow:
       width: 44
       zIndex: 1002
     viewport:
-      x: -669.4426462170406
-      y: -278.4511967186953
-      zoom: 1.1359777709904446
+      x: 181.8277670979578
+      y: 178.68724463300555
+      zoom: 0.7613643733535195
