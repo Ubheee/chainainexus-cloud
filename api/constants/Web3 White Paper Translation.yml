@@ -299,12 +299,12 @@ workflow:
           text: "<Task> Identify the technical terms in the users input. Use the following\
             \ format {XXX} -> {XXX} to show the corresponding technical terms before\
             \ and after translation. \n\n<Input Text> \n{{#1717916955547.item#}}\n\
-            <Target Language>\n{{#1711067409646.target_language#}}\n<Example>\n| 英文\
-            \ | 中文 |\n| --- | --- |\n| Prompt Engineering | 提示词工程 |\n| Text Generation\
-            \  | 文本生成 |\n| Token  | Token |\n| Prompt  | 提示词 |\n| Meta Prompting  |\
-            \ 元提示 |\n| diffusion models  | 扩散模型 |\n| Agent  | 智能体 |\n| Transformer\
-            \  | Transformer |\n| Zero Shot  | 零样本 |\n| Few Shot  | 少样本 |\n| chat\
-            \ window  | 聊天 |\n| context | 上下文 |\n| stock photo  | 图库照片 |\n\n\n<Technical\
+            <Target Language>\n{{#1711067409646.target_language#}}\n<Example>\n| English\
+            \ | French |\n| --- | --- |\n| Prompt Engineering | Ingénierie de Prompts |\n| Text Generation\
+            \  | Génération de Texte |\n| Token  | Jeton |\n| Prompt  | Prompt |\n| Meta Prompting  |\
+            \ Méta-Prompting |\n| diffusion models  | modèles de diffusion |\n| Agent  | Agent |\n| Transformer\
+            \  | Transformer |\n| Zero Shot  | Zéro-shot |\n| Few Shot  | Few-shot |\n| chat\
+            \ window  | fenêtre de discussion |\n| context | contexte |\n| stock photo  | photo de stock |\n\n\n<Technical\
             \ Terms> "
         selected: false
         title: 'Identify Terms '
@@ -413,15 +413,15 @@ workflow:
             - The translation should be fluent and conform to {{{#1711067409646.target_language#}}\
             \ expression habits.  \n- Regarding the translation of names. Names in\
             \ technical books are usually not translated, but well-known names should\
-            \ be translated into {{#1711067409646.target_language#}} (e.g., 乔布斯 in\
-            \ Chinese for Steve Jobs).  \n- Regarding the translation of titles. For\
-            \ books with {{#1711067409646.target_language#}} editions, use the {{#1711067409646.target_language#}}\
-            \ title; for books without {{#1711067409646.target_language#}} editions,\
-            \ use the English title directly.  \n- Regarding the translation of tables\
-            \ and figures. Table titles, captions, and annotations in tables should\
-            \ all be translated. Figure titles should be translated. Screenshots of\
-            \ interfaces do not require translation of captions. Explanatory figures\
-            \ should provide translations of captions in a bilingual format.  \n-\
+            \ be translated into {{#1711067409646.target_language#}} (e.g., 'Christopher Columbus' as 'Christophe Colomb' in French).\
+            \  \n- Regarding the translation of titles. For books with {{#1711067409646.target_language#}}\
+            \ editions, use the {{#1711067409646.target_language#}} title; for books\
+            \ without {{#1711067409646.target_language#}} editions, use the English\
+            \ title directly.  \n- Regarding the translation of tables and figures.\
+            \ Table titles, captions, and annotations in tables should all be translated.\
+            \ Figure titles should be translated. Screenshots of interfaces do not\
+            \ require translation of captions. Explanatory figures should provide\
+            \ translations of captions in a bilingual format.  \n-\
             \ Regarding the expression of English terminology. When an English term\
             \ first appears, prioritize using its abbreviated form, followed by the\
             \ English and {{#1711067409646.target_language#}} full names in parentheses,\
@@ -503,8 +503,8 @@ workflow:
             \ and conform to {{{#1711067409646.target_language#}} expression habits.\
             \  \n- Regarding the translation of names. Names in technical books are\
             \ usually not translated, but well-known names should be translated into\
-            \ {{#1711067409646.target_language#}} (e.g., 乔布斯 in Chinese for Steve\
-            \ Jobs).  \n- Regarding the translation of titles. For books with {{#1711067409646.target_language#}}\
+            \ {{#1711067409646.target_language#}} (e.g., 'Christopher Columbus' as 'Christophe Colomb' in French).\
+            \  \n- Regarding the translation of titles. For books with {{#1711067409646.target_language#}}\
             \ editions, use the {{#1711067409646.target_language#}} title; for books\
             \ without {{#1711067409646.target_language#}} editions, use the English\
             \ title directly.  \n- Regarding the translation of tables and figures.\
