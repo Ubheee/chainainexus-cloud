@@ -8,9 +8,139 @@
                 "HR",
                 "Programming",
                 "Writing",
-                "Assistant"
+                "Assistant",
+                "MCP"
             ],
             "recommended_apps": [
+                {
+                    "app": {
+                        "icon": "🐳",
+                        "icon_background": "#CCFBF1",
+                        "id": "TEMP_ID_WHALE_WATCHER",
+                        "mode": "agent-chat",
+                        "name": "Whale Watcher Agent"
+                    },
+                    "app_id": "TEMP_ID_WHALE_WATCHER",
+                    "category": "MCP",
+                    "copyright": "CAN20.AI",
+                    "description": "Real-time tracking of whale wallet movements across multiple chains, with automated alerting and optional pre-emptive trading triggers.",
+                    "is_listed": true,
+                    "position": 20,
+                    "privacy_policy": null
+                },
+                {
+                    "app": {
+                        "icon": "🏛️",
+                        "icon_background": "#FEF9C3",
+                        "id": "TEMP_ID_DAO_GOVERNOR", 
+                        "mode": "agent-chat",
+                        "name": "DAO Auto-Governor"
+                    },
+                    "app_id": "TEMP_ID_DAO_GOVERNOR", 
+                    "category": "MCP",
+                    "copyright": "CAN20.AI",
+                    "description": "Automatically monitors DAO governance proposals, analyzes voting trends, and casts votes based on preset community strategies.",
+                    "is_listed": true,
+                    "position": 21, 
+                    "privacy_policy": null
+                },
+                {
+                    "app": {
+                        "icon": "🔭",
+                        "icon_background": "#ECFCCB",
+                        "id": "TEMP_ID_ALPHA_SNIPER",
+                        "mode": "agent-chat",
+                        "name": "Alpha Sniper Bot"
+                    },
+                    "app_id": "TEMP_ID_ALPHA_SNIPER", 
+                    "category": "MCP",
+                    "copyright": "CAN20.AI",
+                    "description": "Scans Mempools, Telegram channels, and Alpha feeds to detect early token launches and automatically executes strategic buys.",
+                    "is_listed": true,
+                    "position": 22, 
+                    "privacy_policy": null
+                },
+                {
+                    "app": {
+                        "icon": "⚖️",
+                        "icon_background": "#CFFAFE",
+                        "id": "TEMP_ID_DEFI_ARBITRAGE", 
+                        "mode": "agent-chat",
+                        "name": "DeFi Arbitrage Executor"
+                    },
+                    "app_id": "TEMP_ID_DEFI_ARBITRAGE",
+                    "category": "MCP",
+                    "copyright": "CAN20.AI",
+                    "description": "Detects price discrepancies across DEXs and CEXs in real time, executing arbitrage strategies through modular multi-agent coordination.",
+                    "is_listed": true,
+                    "position": 23,
+                    "privacy_policy": null
+                },
+                {
+                    "app": {
+                        "icon": "📈",
+                        "icon_background": "#FEE2E2",
+                        "id": "TEMP_ID_NFT_TREND", 
+                        "mode": "agent-chat",
+                        "name": "NFT Trend Crawler"
+                    },
+                    "app_id": "TEMP_ID_NFT_TREND", 
+                    "category": "MCP",
+                    "copyright": "CAN20.AI",
+                    "description": "Tracks trending NFTs, floor price changes, and social signals, aggregating insights for collector DAOs and investors.",
+                    "is_listed": true,
+                    "position": 24, 
+                    "privacy_policy": null
+                },
+                {
+                    "app": {
+                        "icon": "📝",
+                        "icon_background": "#F5D0FE",
+                        "id": "TEMP_ID_CONTENT_SYNTH",
+                        "mode": "agent-chat",
+                        "name": "Creator Content Synthesizer"
+                    },
+                    "app_id": "TEMP_ID_CONTENT_SYNTH", 
+                    "category": "MCP",
+                    "copyright": "CAN20.AI",
+                    "description": "Composes visual content, social media posts, and campaign narratives using modular content-generation agents.",
+                    "is_listed": true,
+                    "position": 25, 
+                    "privacy_policy": null
+                },
+                {
+                    "app": {
+                        "icon": "💹",
+                        "icon_background": "#D1FAE5",
+                        "id": "TEMP_ID_PREDICT_TRADE", 
+                        "mode": "agent-chat",
+                        "name": "Predictive Trading Agent"
+                    },
+                    "app_id": "TEMP_ID_PREDICT_TRADE",
+                    "category": "MCP",
+                    "copyright": "CAN20.AI",
+                    "description": "Forecasts short-term token price movements using multimodal on-chain data and sentiment analysis from Web2/Web3 sources.",
+                    "is_listed": true,
+                    "position": 26,
+                    "privacy_policy": null
+                },
+                {
+                    "app": {
+                        "icon": "🏪",
+                        "icon_background": "#FEF08A",
+                        "id": "TEMP_ID_AGENT_MARKET", 
+                        "mode": "agent-chat",
+                        "name": "Agent Marketplace Manager"
+                    },
+                    "app_id": "TEMP_ID_AGENT_MARKET", 
+                    "category": "MCP",
+                    "copyright": "CAN20.AI",
+                    "description": "Deploys, prices, monitors, and optimizes owned Agents (dAaaA) in the decentralized marketplace for maximum revenue extraction.",
+                    "is_listed": true,
+                    "position": 27, 
+                    "privacy_policy": null
+                }
+                ,
                 {
                     "app": {
                         "icon": "🤖",
