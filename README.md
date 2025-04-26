@@ -1,6 +1,6 @@
 ## Contact
 - [Discord](https://discord.com/invite/5thjdHfFyK)
--  [X](https://x.com/ChainAiNexus[)
+-  [X](https://x.com/ChainAiNexus)
 -  [Gitbook](https://chain-ai-nexus.gitbook.io/chain-ai-nexus/)
 
 # MCP + Modular AI + Web3 Architecture for the Next Generation of Intent Centers
