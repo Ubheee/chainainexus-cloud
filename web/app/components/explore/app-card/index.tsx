@@ -22,6 +22,7 @@ const AppCard = ({
 }: AppCardProps) => {
   const { t } = useTranslation()
   const { app: appBasicInfo } = app
+  const isComingSoon = app.app_id.startsWith('TEMP')
   return (
     <div className={cn('relative overflow-hidden pb-2 group col-span-1 bg-components-card-bg border-2 border-solid border-transparent rounded-lg shadow-sm flex flex-col transition-all duration-200 ease-in-out cursor-pointer hover:shadow-lg')}>
       <div className='flex pt-[14px] px-[14px] pb-3 h-[66px] items-center gap-3 grow-0 shrink-0'>
@@ -72,9 +73,22 @@ const AppCard = ({
       {isExplore && canCreate && (
         <div className={cn('hidden items-center flex-wrap min-h-[42px] px-[14px] pt-2 pb-[10px] bg-background-body group-hover:flex absolute bottom-0 left-0 right-0')}>
           <div className={cn('flex items-center w-full space-x-2')}>
-            <Button variant='primary' className='grow h-7' onClick={() => onCreate()}>
-              <PlusIcon className='w-4 h-4 mr-1' />
-              <span className='text-xs'>{t('explore.appCard.addToWorkspace')}</span>
+            <Button
+              variant='primary'
+              className='grow h-7'
+              disabled={isComingSoon}
+              onClick={isComingSoon ? undefined : () => onCreate()}
+            >
+              {isComingSoon
+                ? (
+                  <span className='text-xs'>{t('explore.appCard.comingSoon', 'Coming soon')}</span>
+                )
+                : (
+                  <>
+                    <PlusIcon className='w-4 h-4 mr-1' />
+                    <span className='text-xs'>{t('explore.appCard.addToWorkspace')}</span>
+                  </>
+                )}
             </Button>
           </div>
         </div>
@@ -82,9 +96,22 @@ const AppCard = ({
       {!isExplore && (
         <div className={cn('hidden items-center flex-wrap min-h-[42px] px-[14px] pt-2 pb-[10px] bg-background-body group-hover:flex absolute bottom-0 left-0 right-0')}>
           <div className={cn('flex items-center w-full space-x-2')}>
-            <Button variant='primary' className='grow h-7' onClick={() => onCreate()}>
-              <PlusIcon className='w-4 h-4 mr-1' />
-              <span className='text-xs'>{t('app.newApp.useTemplate')}</span>
+            <Button
+              variant='primary'
+              className='grow h-7'
+              disabled={isComingSoon}
+              onClick={isComingSoon ? undefined : () => onCreate()}
+            >
+              {isComingSoon
+                ? (
+                  <span className='text-xs'>{t('explore.appCard.comingSoon', 'Coming soon')}</span>
+                )
+                : (
+                  <>
+                    <PlusIcon className='w-4 h-4 mr-1' />
+                    <span className='text-xs'>{t('app.newApp.useTemplate')}</span>
+                  </>
+                )}
             </Button>
           </div>
         </div>
