@@ -32,12 +32,14 @@ import { fetchWorkflowDraft } from '@/service/workflow'
 import { fetchInstalledAppList } from '@/service/explore'
 import { AppTypeIcon } from '@/app/components/app/type-selector'
 
+
 export type AppCardProps = {
   app: App
   onRefresh?: () => void
+  isComingSoon?: boolean
 }
 
-const AppCard = ({ app, onRefresh }: AppCardProps) => {
+const AppCard = ({ app, onRefresh, isComingSoon = false }: AppCardProps) => {
   const { t } = useTranslation()
   const { notify } = useContext(ToastContext)
   const { isCurrentWorkspaceEditor } = useAppContext()
@@ -273,10 +275,18 @@ const AppCard = ({ app, onRefresh }: AppCardProps) => {
     <>
       <div
         onClick={(e) => {
+          if (isComingSoon) {
+            e.preventDefault()
+            e.stopPropagation()
+            return
+          }
           e.preventDefault()
           getRedirection(isCurrentWorkspaceEditor, app, push)
         }}
-        className='relative h-[160px] group col-span-1 bg-components-card-bg border-[1px] border-solid border-components-card-border rounded-xl shadow-sm inline-flex flex-col transition-all duration-200 ease-in-out cursor-pointer hover:shadow-lg'
+        className={cn(
+          'relative h-[160px] group col-span-1 bg-components-card-bg border-[1px] border-solid border-components-card-border rounded-xl shadow-sm inline-flex flex-col transition-all duration-200 ease-in-out',
+          isComingSoon ? 'cursor-default opacity-60' : 'cursor-pointer hover:shadow-lg',
+        )}
       >
         <div className='flex pt-[14px] px-[14px] pb-3 h-[66px] items-center gap-3 grow-0 shrink-0'>
           <div className='relative shrink-0'>
@@ -310,61 +320,72 @@ const AppCard = ({ app, onRefresh }: AppCardProps) => {
             {app.description}
           </div>
         </div>
-        <div className={cn(
-          'absolute bottom-1 left-0 right-0 items-center shrink-0 pt-1 pl-[14px] pr-[6px] pb-[6px] h-[42px]',
-          tags.length ? 'flex' : '!hidden group-hover:!flex',
-        )}>
-          {isCurrentWorkspaceEditor && (
-            <>
-              <div className={cn('grow flex items-center gap-1 w-0')} onClick={(e) => {
-                e.stopPropagation()
-                e.preventDefault()
-              }}>
-                <div className={cn(
-                  'group-hover:!block group-hover:!mr-0 mr-[41px] grow w-full',
-                  tags.length ? '!block' : '!hidden',
-                )}>
-                  <TagSelector
-                    position='bl'
-                    type='app'
-                    targetID={app.id}
-                    value={tags.map(tag => tag.id)}
-                    selectedTags={tags}
-                    onCacheUpdate={setTags}
-                    onChange={onRefresh}
+        {!isComingSoon && (
+          <div className={cn(
+            'absolute bottom-1 left-0 right-0 items-center shrink-0 pt-1 pl-[14px] pr-[6px] pb-[6px] h-[42px]',
+            tags.length ? 'flex' : '',
+            'group-hover:flex'
+          )}>
+            {isCurrentWorkspaceEditor && (
+              <>
+                <div className={cn('grow flex items-center gap-1 w-0')} onClick={(e) => {
+                  e.stopPropagation()
+                  e.preventDefault()
+                }}>
+                  <div className={cn(
+                    'group-hover:!block group-hover:!mr-0 mr-[41px] grow w-full',
+                    tags.length ? '!block' : '!hidden',
+                  )}>
+                    <TagSelector
+                      position='bl'
+                      type='app'
+                      targetID={app.id}
+                      value={tags.map(tag => tag.id)}
+                      selectedTags={tags}
+                      onCacheUpdate={setTags}
+                      onChange={onRefresh}
+                    />
+                  </div>
+                </div>
+                <div className='!hidden group-hover:!flex shrink-0 mx-1 w-[1px] h-[14px]' />
+                <div className='!hidden group-hover:!flex shrink-0'>
+                  <CustomPopover
+                    htmlContent={<Operations />}
+                    position="br"
+                    trigger="click"
+                    btnElement={
+                      <div
+                        className='flex items-center justify-center w-8 h-8 cursor-pointer rounded-md'
+                      >
+                        <RiMoreFill className='w-4 h-4 text-text-tertiary' />
+                      </div>
+                    }
+                    btnClassName={open =>
+                      cn(
+                        open ? '!bg-black/5 !shadow-none' : '!bg-transparent',
+                        'h-8 w-8 !p-2 rounded-md border-none hover:!bg-black/5',
+                      )
+                    }
+                    popupClassName={
+                      (app.mode === 'completion' || app.mode === 'chat')
+                        ? '!w-[256px] translate-x-[-224px]'
+                        : '!w-[160px] translate-x-[-128px]'
+                    }
+                    className={'h-fit !z-20'}
                   />
                 </div>
-              </div>
-              <div className='!hidden group-hover:!flex shrink-0 mx-1 w-[1px] h-[14px]' />
-              <div className='!hidden group-hover:!flex shrink-0'>
-                <CustomPopover
-                  htmlContent={<Operations />}
-                  position="br"
-                  trigger="click"
-                  btnElement={
-                    <div
-                      className='flex items-center justify-center w-8 h-8 cursor-pointer rounded-md'
-                    >
-                      <RiMoreFill className='w-4 h-4 text-text-tertiary' />
-                    </div>
-                  }
-                  btnClassName={open =>
-                    cn(
-                      open ? '!bg-black/5 !shadow-none' : '!bg-transparent',
-                      'h-8 w-8 !p-2 rounded-md border-none hover:!bg-black/5',
-                    )
-                  }
-                  popupClassName={
-                    (app.mode === 'completion' || app.mode === 'chat')
-                      ? '!w-[256px] translate-x-[-224px]'
-                      : '!w-[160px] translate-x-[-128px]'
-                  }
-                  className={'h-fit !z-20'}
-                />
-              </div>
-            </>
-          )}
-        </div>
+              </>
+            )}
+          </div>
+        )}
+
+        {isComingSoon && (
+          <div className='absolute inset-0 flex items-center justify-center rounded-xl bg-white/70 dark:bg-black/70 backdrop-blur-[1px] z-10'>
+            <span className='px-3 py-1 rounded-full text-sm font-semibold text-gray-700 dark:bg-gray-300 bg-gray-200 dark:bg-gray-700/50'>
+              {t('common.operation.comingSoon', 'Coming Soon')}
+            </span>
+          </div>
+        )}
       </div>
       {showEditModal && (
         <EditAppModal
